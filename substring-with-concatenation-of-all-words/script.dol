@@ -1,0 +1,37 @@
+const findSubstring = function (s, words) {
+  const wL = words[0].length; // Longitud de cada palabra
+  const substringCount = wL * words.length; // Longitud total de la ventana
+  const sol = [];
+  const wordCount = {};
+
+  // Crear un contador de las palabras en 'words'
+  for (let word of words) {
+    wordCount[word] = (wordCount[word] || 0) + 1;
+  }
+
+  // Recorrer desde 0 hasta la longitud de la cadena menos la longitud del substring
+  for (let i = 0; i <= s.length - substringCount; i++) {
+    const seenWords = {};
+
+    // Verificar cada palabra en la ventana actual
+    for (let j = 0; j < words.length; j++) {
+      const wordIndex = i + j * wL;
+      const word = s.slice(wordIndex, wordIndex + wL);
+
+      // Si la palabra no está en 'words', salimos del loop
+      if (!wordCount[word]) break;
+
+      // Contamos la palabra vista
+      seenWords[word] = (seenWords[word] || 0) + 1;
+
+      // Si la palabra se ve más veces de lo que aparece en 'words', salimos del loop
+      if (seenWords[word] > wordCount[word]) break;
+
+      // Si hemos visto todas las palabras correctamente, guardamos el índice
+      if (j + 1 === words.length) sol.push(i);
+    }
+  }
+
+  return sol;
+};
+//Total Time: 842.10 ms in local.

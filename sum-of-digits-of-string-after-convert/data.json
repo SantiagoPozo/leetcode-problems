@@ -1,0 +1,42 @@
+[
+  {
+    "s": "leetcode",
+    "k": 2,
+    "expected": 6
+  },
+  {
+    "s": "a",
+    "k": 1,
+    "expected": 1
+  },
+  {
+    "s": "zbax",
+    "k": 2,
+    "expected": 8
+  },
+  {
+    "s": "iiii",
+    "k": 1,
+    "expected": 36
+  },
+  {
+    "s": "iiii",
+    "k": 2,
+    "expected": 9
+  },
+  {
+    "s": "hvmhoasabaymnmsd",
+    "k": 1,
+    "expected": 79
+  },
+  {
+    "s": "hvmhoasabaymnmsdz",
+    "k": 1,
+    "expected": 87
+  },
+  {
+    "s": "iiiizzzz",
+    "k": 3,
+    "expected": 5
+  }
+]

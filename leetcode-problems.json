@@ -1,0 +1,315 @@
+[
+  {
+    "id": "4",
+    "title": "Median of Two Sorted Arrays",
+    "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.",
+    "topics": ["Array", "Binary Search", "Divide And Conquer"],
+    "runtime": {
+      "time": 75,
+      "beats": 99.04,
+      "complexity": "O(log(Min(m,n)))"
+    },
+    "memory": {
+      "space": 54.07,
+      "beats": 85.19,
+      "complexity": "O(1)",
+      "required_complexity": "Not "
+    },
+    "leetcode_url": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
+    "here_url": "median-of-two-sorted-arrays",
+    "language": "JavaScript",
+    "difficulty": "hard",
+    "solved": "Aug 25, 2024",
+    "notes": "There was a required complexity: O(log(m + n)) less than the one I used.",
+    "code": "const findMedianSortedArrays = function (nums1, nums2) {\n  const l1 = nums1.length, l2 = nums2.length;\n  if (l1 === 0 || l2 === 0 || (l1 === 1 && l2 === 1)) {\n    final = nums1.concat(nums2);\n    l = final.length;\n    if (l % 2) return final[(l - 1) / 2];\n    else return (final[l / 2 - 1] + final[l / 2]) / 2;\n  } else {\n    let shiftNums1 = true;\n    nums1[0] > nums2[0] && (shiftNums1 = false);\n    nums1[l1 - 1] > nums2[l2 - 1] ? nums1.pop() : nums2.pop();\n    shiftNums1 ? nums1.shift() : nums2.shift();\n    return findMedianSortedArrays(nums1, nums2);\n  }\n};"
+  },
+  {
+    "id": "30",
+    "title": "Substring with Concatenation of All Words",
+    "description": "Given a string s and a list of words of the same length, find all starting indices of substring(s) in s that is a concatenation of each word exactly once without any intervening characters.",
+    "topics": ["Hash Table", "String", "Sliding Window"],
+    "runtime": {
+      "time": 500,
+      "beats": 75.29,
+      "complexity": "O(n^2)"
+    },
+    "memory": {
+      "space": 79.46,
+      "beats": 5.45,
+      "complexity": "O(n)"
+    },
+    "leetcode_url": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
+    "here_url": "substring-with-concatenation-of-all-words",
+    "language": "JavaScript",
+    "difficulty": "hard",
+    "solved": "Aug 30, 2024",
+    "notes": "",
+    "code": "const findSubstring = function (s, words) {\n  const wL = words[0].length;\n  const substringCount = wL * words.length;\n  const sol = [];\n  const theCollection = {};\n\n  for (let i = 0; i <= s.length - substringCount; i++) {\n    const substring = s.slice(i, i + substringCount);\n    if (theCollection[substring] === true) {\n      sol.push(i);\n      continue;\n    }\n    if (theCollection[substring] === false) {\n      continue;\n    }\n    if (theCollection[substring] === undefined) {\n      if (\n        isAPermutation(\n          Array.from({ length: substring.length / wL }, (_, j) =>\n            substring.slice(j * wL, j * wL + wL)\n          ),\n          words\n        )\n      ) {\n        sol.push(i);\n        theCollection[substring] = true;\n      } else {\n        theCollection[substring] = false;\n      }\n    }\n  }\n  return sol;\n};\n\nfunction isAPermutation(arr, words) {\n  const wordCount = {};\n  for (let word of words) {\n    wordCount[word] = (wordCount[word] || 0) + 1;\n  }\n  const currentCount = {};\n  for (let word of arr) {\n    if (!wordCount[word]) return false;\n    currentCount[word] = (currentCount[word] || 0) + 1;\n    if (currentCount[word] > wordCount[word]) return false;\n  }\n  return true;\n}"
+  },
+  {
+    "id": "23",
+    "title": "Merge k Sorted Lists",
+    "description": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.",
+    "topics": [
+      "Linked List",
+      "Divide And Conquer",
+      "Heap (Priority Queue)",
+      "Merge Sort"
+    ],
+    "runtime": {
+      "time": 0,
+      "beats": 0,
+      "complexity": "O(log(Min(m,n)))"
+    },
+    "memory": {
+      "space": 0,
+      "beats": 0,
+      "complexity": ""
+    },
+    "leetcode_url": "https://leetcode.com/problems/merge-k-sorted-lists/",
+    "here_url": "merge-k-sorted-lists/",
+    "language": "JavaScript",
+    "difficulty": "hard",
+    "solved": "I'll be back... ",
+    "notes": "",
+    "code": ""
+  },
+  {
+    "id": "1894",
+    "title": "Find the Student that Will Replace the Chalk",
+    "description": "<p>There are n students in a class numbered from 0 to n - 1. The teacher will give each student a problem starting with the student number 0, then the student number 1, and so on until the teacher reaches the student number n - 1. After that, the teacher will restart the process, starting with the student number 0 again.</p><p>You are given a 0-indexed integer array chalk and an integer k. There are initially k pieces of chalk. When the student number i is given a problem to solve, they will use chalk[i] pieces of chalk to solve that problem. However, if the current number of chalk pieces is strictly less than chalk[i], then the student number i will be asked to replace the chalk.</p><p>Return the index of the student that will replace the chalk pieces.</p>",
+    "topics": ["Array", "Binary Search", "Simulation", "Prefix Sum"],
+    "runtime": {
+      "time": 76,
+      "beats": 69.88,
+      "complexity": "O(N)",
+      "required_complexity": "O(N)"
+    },
+    "memory": {
+      "space": 59.93,
+      "beats": 71.08,
+      "complexity": "O(1)",
+      "required_complexity": "O(1)"
+    },
+    "leetcode_url": "https://leetcode.com/problems/find-the-student-that-will-replace-the-chalk/",
+    "here_url": "find-the-student-that-will-replace-the-chalk/",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "solved": "Sep 02, 2024",
+    "notes": "",
+    "code": "var chalkReplacer = function (chalk, k) {\n  let remainder = k % chalk.reduce((a, b) => a + b, 0);\n  for (let i = 0; i < chalk.length; i++) {\n    remainder -= chalk[i];\n    if (remainder < 0) return i;\n  }\n};"
+  },
+  {
+    "id": "2022",
+    "title": "Convert 1D Array into 2D Array",
+    "description": "<p>You are given a 0-indexed 1-dimensional (1D) integer array original, and two integers, m and n. You are tasked with creating a 2-dimensional (2D) array with m rows and n columns using all the elements from original.</p><p>The elements from indices 0 to n - 1 (inclusive) of original should form the first row of the constructed 2D array, the elements from indices n to 2 * n - 1 (inclusive) should form the second row of the constructed 2D array, and so on.</p><p>Return an m x n 2D array constructed according to the above procedure, or an empty 2D array if it is impossible.</p>",
+    "topics": ["Array", "Matrix", "Simulation"],
+    "runtime": {
+      "time": 162,
+      "beats": 94.29,
+      "complexity": ""
+    },
+    "memory": {
+      "space": 69.63,
+      "beats": 68.57,
+      "complexity": ""
+    },
+    "leetcode_url": "https://leetcode.com/problems/convert-1d-array-into-2d-array/",
+    "here_url": "convert-1d-array-into-2d-array",
+    "language": "JavaScript",
+    "difficulty": "easy",
+    "solved": "Sep 02, 2024",
+    "notes": "",
+    "code": "var construct2DArray = function (original, m, n) {\n  if (m * n !== original.length) return [];\n  return Array.from({ length: m }, (_, i) => original.slice(i * n, i * n + n));\n};"
+  },
+  {
+    "id": "566",
+    "title": "Reshape the Matrix",
+    "description": "In MATLAB, there is a handy function called 'reshape' which can reshape an m x n matrix into a new one with a different size r x c keeping its original data. You are given an m x n matrix mat and two integers r and c representing the number of rows and the number of columns of the wanted reshaped matrix.",
+    "topics": ["Array", "Matrix", "Simulation"],
+    "runtime": {
+      "time": 66,
+      "beats": 95.93,
+      "complexity": ""
+    },
+    "memory": {
+      "space": 54.83,
+      "beats": 30.74,
+      "complexity": ""
+    },
+    "leetcode_url": "https://leetcode.com/problems/reshape-the-matrix/description/",
+    "here_url": "reshape-the-matrix",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "solved": "Sep 02, 2024",
+    "notes": "",
+    "code": "var matrixReshape = function (mat, r, c) {\n  const m = mat.length;\n  if (m * mat[0].length !== r * c) return mat;\n  const result = [];\n  for (i = 0; i < m; i++) {\n    result.push(...mat[i]);\n  }\n  return Array.from({ length: r }, (_, i) => result.slice(i * c, i * c + c));\n};"
+  },
+  {
+    "id": "30",
+    "title": "Substring with Concatenation of All Words",
+    "description": "Given a string s and a list of words of the same length, find all starting indices of substring(s) in s that is a concatenation of each word exactly once without any intervening characters.",
+    "topics": ["Hash Table", "String", "Sliding Window"],
+    "runtime": {
+      "time": 515,
+      "beats": 74.63,
+      "complexity": "Unknown"
+    },
+    "memory": {
+      "space": 77.96,
+      "beats": 5.63,
+      "complexity": "Unknown"
+    },
+    "leetcode_url": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
+    "here_url": "substring-with-concatenation-of-all-words",
+    "language": "JavaScript",
+    "difficulty": "hard",
+    "solved": "Aug 30, 2024",
+    "notes": "",
+    "code": "var findSubstring = function(s, words) {\n  const wordLen = words[0].length;\n  const allWordsLen = words.length * wordLen;\n  const wordMap = {};\n  const result = [];\n  words.forEach(word => wordMap[word] = (wordMap[word] || 0) + 1);\n  for (let i = 0; i <= s.length - allWordsLen; i++) {\n    const seen = {};\n    for (let j = 0; j < words.length; j++) {\n      const word = s.substr(i + j * wordLen, wordLen);\n      if (!wordMap[word]) break;\n      seen[word] = (seen[word] || 0) + 1;\n      if (seen[word] > wordMap[word]) break;\n      if (j + 1 === words.length) result.push(i);\n    }\n  }\n  return result;\n};"
+  },
+  {
+    "id": "1945",
+    "title": "Sum of Digits of String After Convert",
+    "description": "You are given a string s consisting of lowercase English letters, and an integer k. First, convert s into an integer by replacing each letter with its position in the alphabet (i.e., replace 'a' with 1, 'b' with 2, ..., 'z' with 26). Then, transform the integer by replacing it with the sum of its digits. Repeat the transformation k times in total.",
+    "topics": ["String", "Simulation"],
+    "runtime": {
+      "time": 61,
+      "beats": 38.99,
+      "complexity": "O(n)"
+    },
+    "memory": {
+      "space": 50.06,
+      "beats": 77.99,
+      "complexity": "O(n)"
+    },
+    "leetcode_url": "https://leetcode.com/problems/sum-of-digits-of-string-after-convert/",
+    "here_url": "sum-of-digits-of-string-after-convert",
+    "language": "JavaScript",
+    "difficulty": "easy",
+    "solved": "Sep 03, 2024",
+    "notes": "",
+    "code": "var getLucky = function (s, k) {\n  const array = s\n    .split(\"\")\n    .map((char) => (char.charCodeAt(0) - 96).toString())\n    .join(\"\")\n    .split(\"\")\n    .map(Number);\n  return sumOfDigits(array, k);\n};\n\nfunction sumOfDigits(array, k) {\n  let sum = array.reduce((acc, digit) => acc + digit, 0);\n  if (k === 1 || sum < 10) return sum;\n  return sumOfDigits(sum.toString().split(\"\").map(Number), k - 1);\n}"
+  },
+  {
+    "id": "874",
+    "title": "Walking Robot Simulation",
+    "description": "<p>A robot on an infinite XY-plane starts at point (0, 0) facing north. The robot can receive a sequence of these three possible types of commands:</p><ul><li>-2: Turn left 90 degrees.</li><li>-1: Turn right 90 degrees.</li><li>1 <= k <= 9: Move forward k units, one unit at a time.</li></ul><p>Some of the grid squares are obstacles. The ith obstacle is at grid point obstacles[i] = (xi, yi). If the robot runs into an obstacle, then it will instead stay in its current location and move on to the next command.</p><p>Return the maximum Euclidean distance that the robot ever gets from the origin squared (i.e. if the distance is 5, return 25).</p>",
+    "topics": ["Array", "Hash Table", "Simulation"],
+    "runtime": {
+      "time": 116,
+      "beats": 50,
+      "complexity": "O(n + k)"
+    },
+    "memory": {
+      "space": 64.41,
+      "beats": 30.95,
+      "complexity": "O(k)"
+    },
+    "leetcode_url": "https://leetcode.com/problems/walking-robot-simulation/",
+    "here_url": "walking-robot-simulation",
+    "language": "JavaScript",
+    "difficulty": "Medium",
+    "solved": "Sep 04, 2024",
+    "notes": "",
+    "code": "var robotSim = function(commands, obstacles) {\n  const dx = [0, 1, 0, -1];\n  const dy = [1, 0, -1, 0];\n  let x = 0, y = 0, di = 0;\n  const obstacleSet = new Set();\n  let ans = 0;\n\n  for (let i = 0; i < obstacles.length; i++) {\n    const obstacle = obstacles[i];\n    obstacleSet.add(obstacle[0] + \"#\" + obstacle[1]);\n  }\n\n  for (let i = 0; i < commands.length; i++) {\n    const command = commands[i];\n    if (command === -2) {\n      di = (di + 3) % 4;\n    } else if (command === -1) {\n      di = (di + 1) % 4;\n    } else {\n      for (let j = 0; j < command; j++) {\n        const nx = x + dx[di];\n        const ny = y + dy[di];\n        const obstacleKey = nx + \"#\" + ny;\n        if (!obstacleSet.has(obstacleKey)) {\n          x = nx;\n          y = ny;\n          ans = Math.max(ans, x * x + y * y);\n        }\n      }\n    }\n  }\n\n  return ans;\n};"
+  },
+  {
+    "id": "2028",
+    "title": "Find Missing Observations",
+    "description": "<p>You have observations of n + m 6-sided dice rolls with each face numbered from 1 to 6. n of the observations went missing, and you only have the observations of m rolls. Fortunately, you have also calculated the average value of the n + m rolls.</p><p>You are given an integer array rolls of length m where rolls[i] is the value of the ith observation. You are also given the two integers mean and n.</p><p>Return an array of length n containing the missing observations such that the average value of the n + m rolls is exactly mean. If there are multiple valid answers, return any of them. If no such array exists, return an empty array.</p><p>The average value of a set of k numbers is the sum of the numbers divided by k.</p><p>Note that mean is an integer, so the sum of the n + m rolls should be divisible by n + m.</p>",
+    "topics": ["Array", "Math", "Simulation"],
+    "runtime": {
+      "time": 228,
+      "beats": 77.08,
+      "complexity": "O(n)"
+    },
+    "memory": {
+      "space": 64.96,
+      "beats": 97.92,
+      "complexity": "O(1)"
+    },
+    "leetcode_url": "https://leetcode.com/problems/find-missing-observations/",
+    "here_url": "find-missing-observations",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "solved": "Sep 05, 2024",
+    "notes": "",
+    "code": "var missingRolls = function (rolls, mean, n) {\n  const B =\n    mean * (rolls.length + n) - rolls.reduce((acc, val) => acc + val, 0);\n  if (B > 6 * n || B < n) return [];\n  const base = Math.floor(B / n);\n  const remainder = B % n;\n  const result = [];\n  for (let i = 0; i < n; i++) {\n    result.push(base + (i < remainder ? 1 : 0));\n  }\n  return result;\n};"
+  },
+  {
+    "id": "2798",
+    "title": "Delete Nodes from Linked List Present in Array",
+    "description": "You are given an array of integers nums and the head of a linked list. Return the head of the modified linked list after removing all nodes from the linked list that have a value that exists in nums.",
+    "topics": ["Array", "Hash Table", "Linked List"],
+    "runtime": {
+      "time": 338,
+      "beats": 90.04,
+      "complexity": "O(n)"
+    },
+    "memory": {
+      "space": 89.66,
+      "beats": 90.18,
+      "complexity": "O(n)"
+    },
+    "leetcode_url": "https://leetcode.com/problems/delete-nodes-from-linked-list-present-in-array/",
+    "here_url": "delete-nodes-from-linked-list-present-in-array",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "solved": "Sep 06, 2024",
+    "notes": "",
+    "code": "/**\n * Definition for singly-linked list.\n * function ListNode(val, next) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.next = (next===undefined ? null : next)\n * }\n */\n\n/**\n * @param {number[]} nums\n * @param {ListNode} head\n * @return {ListNode}\n */\nvar modifiedList = function (nums, head) {\n  const uniqueNums = new Set(nums);\n  let dummy = new ListNode(0);\n  dummy.next = head;\n  let current = dummy;\n  while (current.next !== null) {\n    if (uniqueNums.has(current.next.val)) {\n      current.next = current.next.next;\n    } else {\n      current = current.next;\n    }\n  }\n  return dummy.next;\n};"
+  },
+  {
+    "id": "1367",
+    "title": "Linked List in Binary Tree",
+    "description": "Given a binary tree root and a linked list with the head node, determine if the linked list is a subpath of the tree. The linked list needs to match a downward path from the root to a leaf.",
+    "topics": [
+      "Linked List",
+      "Tree",
+      "Breadth-First Search",
+      "Binary Tree",
+      "Depth-First Search"
+    ],
+    "runtime": {
+      "time": 75,
+      "beats": 31.94,
+      "complexity": "O(n * m)"
+    },
+    "memory": {
+      "space": 56.83,
+      "beats": 10.65,
+      "complexity": "O(n)"
+    },
+    "leetcode_url": "https://leetcode.com/problems/linked-list-in-binary-tree/",
+    "here_url": "linked-list-in-binary-tree/",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "solved": "Sep 07, 2024",
+    "notes": "",
+    "code": "/**\n * Definition for singly-linked list.\n */\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\n/**\n * Definition for a binary tree node.\n */\nfunction TreeNode(val, left, right) {\n  this.val = val === undefined ? 0 : val;\n  this.left = left === undefined ? null : left;\n  this.right = right === undefined ? null : right;\n}\n\n/**\n * @param {ListNode} head\n * @param {TreeNode} root\n * @return {boolean}\n */\nvar isSubPath = function (head, root) {\n  if (!root) return false;\n  return (\n    dfs(head, root) || isSubPath(head, root.left) || isSubPath(head, root.right)\n  );\n\n  function dfs(node, tree) {\n    if (!node) return true;\n    if (!tree) return false;\n    return (\n      node.val === tree.val &&\n      (dfs(node.next, tree.left) || dfs(node.next, tree.right))\n    );\n  }\n};"
+  },
+  {
+    "id": "725",
+    "title": "Split Linked List in Parts",
+    "description": "Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts. The length of each part should be as equal as possible: no two parts should have a size differing by more than one. This may lead to some parts being null.",
+    "topics": ["Linked List"],
+    "runtime": {
+      "time": 62,
+      "beats": 77.17,
+      "complexity": "O(n)"
+    },
+    "memory": {
+      "space": 52.85,
+      "beats": 44.09,
+      "complexity": "O(k)"
+    },
+    "leetcode_url": "https://leetcode.com/problems/split-linked-list-in-parts/",
+    "here_url": "split-linked-list-in-parts/",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "solved": "Sep 08, 2024",
+    "notes": "",
+    "code": "/**\n * @param {ListNode} head\n * @param {number} k\n * @return {ListNode[]}\n */\n//  Definition for singly-linked list.\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\nconst splitListToParts = function (head, k) {\n  let l = 0;\n  let node = head;\n  while (node) {\n    l++;\n    node = node.next;\n  }\n  const avarageLength = l / k;\n  const numOfPartsLonger = l % k;\n  const parts = [];\n  for (let i = 0; i < k; i++) {\n    let part = new ListNode();\n    let partHead = part;\n    for (let j = 0; j <= avarageLength + (i < numOfPartsLonger ? 0 : -1); j++) {\n      part.next = new ListNode(head.val);\n      part = part.next;\n      head = head.next;\n    }\n    parts.push(partHead.next);\n  }\n  return parts;\n};"
+  }
+]

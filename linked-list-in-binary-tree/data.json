@@ -1,0 +1,143 @@
+{
+  "filter": [],
+  "testCases": [
+    {
+      "linkedList": [4, 2, 8],
+      "binaryTree": [
+        1,
+        4,
+        4,
+        null,
+        2,
+        2,
+        null,
+        1,
+        null,
+        6,
+        8,
+        null,
+        null,
+        null,
+        null,
+        1,
+        3
+      ],
+      "expected": true
+    },
+    {
+      "linkedList": [1, 4, 2, 6],
+      "binaryTree": [
+        1,
+        4,
+        4,
+        null,
+        2,
+        2,
+        null,
+        1,
+        null,
+        6,
+        8,
+        null,
+        null,
+        null,
+        null,
+        1,
+        3
+      ],
+      "expected": true
+    },
+    {
+      "linkedList": [1, 4, 2, 8],
+      "binaryTree": [
+        1,
+        4,
+        4,
+        null,
+        2,
+        2,
+        null,
+        1,
+        null,
+        6,
+        8,
+        null,
+        null,
+        null,
+        null,
+        1,
+        3
+      ],
+      "expected": false
+    },
+    {
+      "linkedList": [1],
+      "binaryTree": [
+        1,
+        4,
+        4,
+        null,
+        2,
+        2,
+        null,
+        1,
+        null,
+        6,
+        8,
+        null,
+        null,
+        null,
+        null,
+        1,
+        3
+      ],
+      "expected": true
+    },
+    {
+      "linkedList": [2, 6, 8],
+      "binaryTree": [
+        1,
+        4,
+        4,
+        null,
+        2,
+        2,
+        null,
+        1,
+        null,
+        6,
+        8,
+        null,
+        null,
+        null,
+        null,
+        1,
+        3
+      ],
+      "expected": true
+    },
+    {
+      "linkedList": [2, 3],
+      "binaryTree": [
+        1,
+        4,
+        4,
+        null,
+        2,
+        2,
+        null,
+        1,
+        null,
+        6,
+        8,
+        null,
+        null,
+        null,
+        null,
+        1,
+        3
+      ],
+      "expected": false
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .passed {
+        color: green;
+        font-weight: bold;
+      }
+
+      .failed {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+
+    <title>Test construct2DArray</title>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Testing sum-of-digits-of-string-after-convert</h1>
+    <div id="test-results"></div>
+
+    <script>
+      // Función para cargar el archivo JSON y realizar las pruebas
+      fetch("data.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const resultsDiv = document.getElementById("test-results");
+
+          // Medir el tiempo total de todas las pruebas
+          const totalStartTime = performance.now();
+
+          data.forEach((testCase, index) => {
+            console.log("===============================");
+            const { s, k, expected } = testCase;
+            // if (s != "iiii") return;
+
+            // Medir el tiempo de ejecución de cada prueba
+            const startTime = performance.now();
+            const result = getLucky(s, k);
+            const endTime = performance.now();
+            const executionTime = (endTime - startTime).toFixed(2);
+
+            // Comparar resultados
+            const testPassed =
+              JSON.stringify(result) === JSON.stringify(expected);
+            const testResultText = `Test ${index + 1}: ${
+              testPassed ? "PASSED" : "FAILED"
+            }`;
+
+            // Crear elemento para mostrar resultado
+            const resultElement = document.createElement("p");
+            resultElement.innerHTML = `<span class="${
+              testPassed ? "passed" : "failed"
+            }"><b>${testResultText}</b></span> - expected: ${JSON.stringify(
+              expected
+            )}, Got: ${JSON.stringify(result)}. Time: ${executionTime} ms`;
+            resultsDiv.appendChild(resultElement);
+          });
+
+          // Medir el tiempo total de ejecución
+          const totalEndTime = performance.now();
+          const totalExecutionTime = (totalEndTime - totalStartTime).toFixed(2);
+
+          // Mostrar el tiempo total empleado en un h2
+          const totalTimeElement = document.createElement("h2");
+          totalTimeElement.textContent = `Total Time: ${totalExecutionTime} ms`;
+          resultsDiv.appendChild(totalTimeElement);
+        })
+        .catch((error) => console.error("Error loading data.json:", error));
+    </script>
+  </body>
+</html>

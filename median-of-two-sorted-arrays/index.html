@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leetcode problems # 4: Median of Two Sorted Arrays.</title>
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/themes/prism.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1 id="problem-title"></h1>
+    </header>
+
+    <main>
+      <section id="problem-description"></section>
+
+      <section>
+        <h2>Code</h2>
+        <pre><code  class="language-javascript">
+            const findMedianSortedArrays = function (nums1, nums2) {
+              console.log("nums1, nums2: ", nums1, nums2);
+              const l1 = nums1.length,
+              l2 = nums2.length;
+              if (l1 === 0 || l2 === 0 || (l1 === 1 && l2 === 1)) {
+                final = nums1.concat(nums2);
+                l = final.length;
+                if (l % 2) return final[(l - 1) / 2];
+                else return (final[l / 2 - 1] + final[l / 2]) / 2;
+              } else {
+                let shiftNums1 = true;
+                nums1[0] > nums2[0] && (shiftNums1 = false);
+                nums1[l1 - 1] > nums2[l2 - 1] ? nums1.pop() : nums2.pop();
+                shiftNums1 ? nums1.shift() : nums2.shift();
+                return findMedianSortedArrays(nums1, nums2);
+              }
+            }; 
+          </code></pre>
+      </section>
+    </main>
+    <footer>
+      <p>&copy; 2024 SantiOldFox. All rights reserved.</p>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/privacy-policy">Privacy Policy</a></li>
+        </ul>
+      </nav>
+      <p>
+        Follow me on:
+        <a href="https://github.com/SantiOldFox" target="_blank">
+          <img
+            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+            alt="GitHub"
+            style="width: 20px; height: 20px"
+          />
+        </a>
+      </p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.26.0/components/prism-javascript.min.js"></script>
+    <script>
+      const version1 = function (nums1, nums2) {
+        const combinedArray = nums1.concat(nums2).sort((a, b) => b - a);
+        if (combinedArray.length % 2 === 0) {
+          const middle = combinedArray.length / 2;
+          return (combinedArray[middle - 1] + combinedArray[middle]) / 2;
+        } else {
+          const middle = combinedArray.length / 2 - 1 / 2;
+          return combinedArray[middle];
+        }
+      };
+
+      const findMedianSortedArrays = function (nums1, nums2) {
+        console.log("nums1, nums2: ", nums1, nums2);
+        const l1 = nums1.length,
+          l2 = nums2.length;
+        if (l1 === 0 || l2 === 0 || (l1 === 1 && l2 === 1)) {
+          final = nums1.concat(nums2);
+          l = final.length;
+          if (l % 2) return final[(l - 1) / 2];
+          else return (final[l / 2 - 1] + final[l / 2]) / 2;
+        } else {
+          let shiftNums1 = true;
+          nums1[0] > nums2[0] && (shiftNums1 = false);
+          nums1[l1 - 1] > nums2[l2 - 1] ? nums1.pop() : nums2.pop();
+          shiftNums1 ? nums1.shift() : nums2.shift();
+          return findMedianSortedArrays(nums1, nums2);
+        }
+      };
+      /* 
+      console.log(findMedianSortedArrays([], [1, 2, 3, 4]));
+      console.log(findMedianSortedArrays([1, 2], [3, 4]));
+      console.log(findMedianSortedArrays([1, 3], [2]));
+      console.log(findMedianSortedArrays([2, 3], [1])); */
+    </script>
+    <script>
+      async function loadProblemData() {
+        try {
+          const response = await fetch("../leetcode-problems.json");
+          const problems = await response.json();
+
+          // Find problem with ID 4
+          const problem = problems.find((p) => p.id === "4");
+
+          if (problem) {
+            // Update the page with problem information
+            document.getElementById(
+              "problem-title"
+            ).textContent = `LeetCode Problem # ${problem.id}. ${problem.title}`;
+            document.getElementById("problem-description").innerHTML = `
+                <h2>Description</h2>
+                <ul id="datasheet">
+                  <li>${problem.description}</li>
+                  <li>Topics 🏷: ${problem.topics.join(", ")}</li>
+                  <li>Difficulty: ${
+                    problem.difficulty.charAt(0).toUpperCase() +
+                    problem.difficulty.slice(1)
+                  }</li>
+                    <li>Date solved: ${problem.date_solved}</li>
+                </ul>
+              
+                <div class="metrics-container">
+                <section id="runtime">
+                <h3>Runtime</h3>
+                <p>Time: ${problem.runtime.time} ms</p>
+                <p>Beats: ${problem.runtime.beats}%</p>
+                <p>Complexity: ${problem.runtime.complexity}</p>
+                <p>Required Complexity: ${
+                  problem.runtime.required_complexity
+                }</p>
+                </section>
+                  <section id="memory">
+                  
+                  <h3>Memory</h3>
+                  <p>Space: ${problem.memory.space} MB</p>
+                  <p>Beats: ${problem.memory.beats}%</p>
+                  <p>Complexity: ${problem.memory.complexity}</p>
+                  <p>Required Complexity: ${
+                    problem.memory.required_complexity
+                  }</p>
+                    </section>
+                </div>
+
+                <section>
+                <h3>Notes</h3>
+                <p>${problem.notes || "N/A"}</p>
+                </section>
+              `;
+          } else {
+            document.getElementById("problem-description").innerHTML =
+              "<p>Problem not found.</p>";
+          }
+        } catch (error) {
+          console.error("Error loading JSON data:", error);
+          document.getElementById("problem-description").innerHTML =
+            "<p>Error loading problem data.</p>";
+        }
+      }
+      document.addEventListener("DOMContentLoaded", loadProblemData);
+    </script>
+  </body>
+</html>

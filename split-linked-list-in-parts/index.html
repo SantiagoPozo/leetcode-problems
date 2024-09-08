@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .passed {
+        color: green;
+        font-weight: bold;
+      }
+      .failed {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+    <title>Testing splitListToParts</title>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <h1>Testing splitListToParts Function</h1>
+    <div id="test-results"></div>
+    <script>
+      const repetitions = 100; // Número de repeticiones por caso de prueba
+
+      fetch("data.json")
+        .then((response) => response.json())
+        .then((data) => {
+          const resultsDiv = document.getElementById("test-results");
+          const totalStartTime = performance.now();
+          const testCasesToRun = data.filter
+            ? data.testCases.filter((_, index) =>
+                data.filter.includes(index + 1)
+              )
+            : data.testCases;
+
+          testCasesToRun.forEach((testCase, index) => {
+            const { head, k, expected } = testCase;
+
+            // Convertir el array de 'head' a una lista enlazada
+            const headList = arrayToList(head);
+
+            // Repetir el caso de prueba 'repetitions' veces
+            let totalExecutionTime = 0;
+            let result;
+            for (let i = 0; i < repetitions; i++) {
+              const startTime = performance.now();
+              const resultListNodes = splitListToParts(headList, k);
+              result = resultListNodes.map((listNode) => listToArray(listNode));
+              const endTime = performance.now();
+              totalExecutionTime += endTime - startTime;
+            }
+
+            // Calcular el tiempo promedio de ejecución
+            const averageExecutionTime = (
+              totalExecutionTime / repetitions
+            ).toFixed(2);
+
+            // Comparar resultados
+            const testPassed =
+              JSON.stringify(result) === JSON.stringify(expected);
+            const testResultText = `Test ${index + 1}: ${
+              testPassed ? "PASSED" : "FAILED"
+            }`;
+
+            // Crear elemento para mostrar resultado
+            const resultElement = document.createElement("p");
+            resultElement.innerHTML = `<span class="${
+              testPassed ? "passed" : "failed"
+            }"><b>${testResultText}</b></span> - Input: head: ${JSON.stringify(
+              head
+            )}, k: ${k}<br />Expected: ${JSON.stringify(
+              expected
+            )}, Got: ${JSON.stringify(
+              result
+            )}. Average Time: ${averageExecutionTime} ms`;
+            resultsDiv.appendChild(resultElement);
+          });
+
+          const totalEndTime = performance.now();
+          const totalExecutionTime = (totalEndTime - totalStartTime).toFixed(2);
+          const totalTimeElement = document.createElement("h2");
+          totalTimeElement.textContent = `Total Time for all tests: ${totalExecutionTime} ms`;
+          resultsDiv.appendChild(totalTimeElement);
+        })
+        .catch((error) => console.error("Error loading data.json:", error));
+
+      function arrayToList(arr) {
+        if (!arr.length) return null;
+        let dummy = new ListNode(0);
+        let current = dummy;
+        for (let val of arr) {
+          current.next = new ListNode(val);
+          current = current.next;
+        }
+        return dummy.next;
+      }
+
+      function listToArray(list) {
+        const result = [];
+        let current = list;
+        while (current) {
+          result.push(current.val);
+          current = current.next;
+        }
+        return result;
+      }
+    </script>
+  </body>
+</html>

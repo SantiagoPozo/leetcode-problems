@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      .passed {
+        color: green;
+        font-weight: bold;
+      }
+      .failed {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+    <title>Testing findSubstring</title>
+  </head>
+  <body>
+    <h1>Testing findSubstring Function</h1>
+    <div id="test-results"></div>
+    <script src="script.js"></script>
+    <script src="test.js"></script>
+    <script>
+      const resultsDiv = document.getElementById("test-results");
+      const totalStartTime = performance.now();
+
+      testCases.forEach((testCase, index) => {
+        const { s, words, expected } = testCase;
+
+        // Medir el tiempo de ejecución de cada prueba
+        const startTime = performance.now();
+        const result = findSubstring(s, words);
+        const endTime = performance.now();
+        const executionTime = (endTime - startTime).toFixed(2);
+
+        // Comparar resultados
+        const testPassed = JSON.stringify(result) === JSON.stringify(expected);
+        const testResultText = `Test ${index + 1}: ${
+          testPassed ? "PASSED" : "FAILED"
+        }`;
+
+        // Crear elemento para mostrar resultado
+        const resultElement = document.createElement("p");
+        resultElement.innerHTML = `<span class="${
+          testPassed ? "passed" : "failed"
+        }"><b>${testResultText}</b></span> - Expected: ${JSON.stringify(
+          expected
+        )}, Got: ${JSON.stringify(result)}. Time: ${executionTime} ms`;
+        resultsDiv.appendChild(resultElement);
+      });
+
+      const totalEndTime = performance.now();
+      const totalExecutionTime = (totalEndTime - totalStartTime).toFixed(2);
+      const totalTimeElement = document.createElement("h2");
+      totalTimeElement.textContent = `Total Time: ${totalExecutionTime} ms`;
+      resultsDiv.appendChild(totalTimeElement);
+    </script>
+  </body>
+</html>

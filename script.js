@@ -1,11 +1,12 @@
 // Function to fetch JSON data and initialize the rendering process
+const searchInput = document.getElementById("search");
+
 async function fetchAndRenderProblems() {
   const response = await fetch("leetcode-problems.json");
   const problems = await response.json();
   renderProblems(problems);
 
   // Attach the search event listener
-  const searchInput = document.getElementById("search");
   searchInput.addEventListener("input", function () {
     const query = searchInput.value.toLowerCase();
     if (query.length >= 3) {
@@ -25,10 +26,6 @@ async function fetchAndRenderProblems() {
 
 // Function to clear the aside content
 const aside = document.querySelector("aside");
-function clearAside() {
-  aside.classList.remove("active");
-  aside.innerHTML = ""; // Vaciar el contenido de aside
-}
 
 // Function to render problems into the HTML
 function renderProblems(problems) {
@@ -45,14 +42,14 @@ function renderProblems(problems) {
   table.innerHTML = `
     <thead>
       <tr>
-        <th>Title</th>
+        <th><span>Title</span></th>
         <th><img src="https://leetcode.com/favicon-16x16.png" alt="Leetcode Icon" /></th>
         <th>⌂</th>
         <th>👁</th>
-        <th>Difficulty</th>
-        <th>Runtime</th>
-        <th>Memory</th>
-        <th>Solved</th>
+        <th><span class="vertical">Difficulty</span></th>
+        <th><span class="vertical">Runtime</span></th>
+        <th><span class="vertical">Memory</span></th>
+        <th><span class="vertical">Date</span></th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -69,7 +66,7 @@ function renderProblems(problems) {
     const mpr = Math.round(memoryPercentage, 0); // memory percentage rounded
 
     row.innerHTML = `
-      <td>${problem.title}
+      <td><h3>${problem.title}</h3>
       </td><td>
       <a href="${problem.leetcode_url}" target="_blank">↑</a>
       </td><td>
@@ -77,25 +74,25 @@ function renderProblems(problems) {
       </td>
       <td class="toggle-cell closed"></td>
       <td><button class="difficulty-button ${difficultyClass}">${
-      problem.difficulty
+      problem.difficulty.charAt(0).toUpperCase() + problem.difficulty.slice(1)
     }</button></td>
-<td class="${getClassForPercentage(runtimePercentage)}">
-  ${runtimePercentage < 10 ? "\u2003" + rpr : rpr}%
-  <span class="tooltiptext">
+  <td class="${getClassForPercentage(runtimePercentage)}">
+    ${runtimePercentage < 10 ? "\u2003" + rpr : rpr}%
+    <span class="tooltiptext">
     Percentage: ${runtimePercentage}% <br /> 
     Time: ${problem.runtime.time}ms <br /> 
     Complexity: ${problem.runtime.complexity}
-  </span>
-</td>
+    </span>
+  </td>
 
-<td class="${getClassForPercentage(memoryPercentage)}">
-  ${memoryPercentage < 10 ? "\u2003" + mpr : mpr}%
-  <span class="tooltiptext">
+  <td class="${getClassForPercentage(memoryPercentage)}">
+    ${memoryPercentage < 10 ? "\u2003" + mpr : mpr}%
+    <span class="tooltiptext">
     Space: ${problem.memory.space}MB <br />
     Complexity: ${problem.memory.complexity}<br />
     Percentage: ${memoryPercentage}%
-  </span>
-</td>
+    </span>
+  </td>
 
 
     <td class="date">${problem.solved}</td>    
@@ -105,7 +102,6 @@ function renderProblems(problems) {
 
   // Función para limpiar el campo de búsqueda
   function clearSearch() {
-    const searchInput = document.getElementById("search");
     searchInput.value = ""; // Limpiar el contenido del campo de búsqueda
 
     // Crear un evento de entrada para activar el filtrado de problemas sin texto
@@ -129,7 +125,6 @@ function renderProblems(problems) {
 
   difficultyButtons.forEach((button) => {
     button.addEventListener("click", function () {
-      const searchInput = document.getElementById("search");
       const difficultyText = button.textContent.trim(); // Obtener el texto del botón y quitar espacios en blanco
 
       // Verificar si la dificultad ya está en el campo de búsqueda
@@ -166,7 +161,7 @@ function renderProblems(problems) {
 
   // Añadir event listeners a las celdas con la clase 'toggle-cell'
   const toggleCells = document.querySelectorAll(".toggle-cell");
-
+  //
   toggleCells.forEach((cell, index) => {
     cell.addEventListener("click", function () {
       if (cell.classList.contains("closed")) {
@@ -181,40 +176,61 @@ function renderProblems(problems) {
 
         // Rellenar el aside con el título, descripción y código
         aside.innerHTML = `
-          <div>
-          <h3>${problems[index].title}</h3>
-          <button id="close">×</button>
-          </div>
-          <code><pre id="code-container" class="language-javascript">${problems[index].code}</pre></code>
+          <button id="close-cross" class="close-button">╳</button>
           <div id="description-container">${problems[index].description}</div>
+          <div id="code-container-container">
+            <code><pre id="code-container" class="language-javascript">${problems[index].code}</pre></code>
+          </div>
+          <button id="close-word" class="close-button"> Close </button>
         `;
+
+        // cambiar aside.style.top a la posición de la parte baja de la celda
+        const cellRect = cell.getBoundingClientRect();
+        aside.style.top = `${cellRect.bottom + window.scrollY - 1}px`;
+
+        //Añadir la clase .active a la fila td de la tabla
+        const activeRow = cell.parentElement;
+        activeRow.classList.add("active");
+
+        //Establecer el background-color de aside a la misma que la fila activa.
+        aside.style.backgroundColor =
+          window.getComputedStyle(activeRow).backgroundColor;
 
         // Resaltar el código usando Prism.js
         const codeContainer = document.getElementById("code-container");
         Prism.highlightElement(codeContainer);
 
         // Añadir event listener al botón de cerrar
-        document.getElementById("close").addEventListener("click", () => {
-          clearAside();
-          closeCell();
+        const closeButtons = document.querySelectorAll(".close-button");
+        closeButtons.forEach((button) => {
+          button.addEventListener("click", activityOff);
         });
       } else {
-        // Cerrar la celda activa
-        aside.classList.remove("active");
-        cell.classList.remove("opened");
-        cell.classList.add("closed");
-        clearAside(); // Vaciar el aside
+        // Cell is closed
+        activityOff();
       }
     });
   });
 }
 
-function closeCell() {
+// Add event listener to the close buttons
+function closeCells() {
   const toggleCells = document.querySelectorAll(".toggle-cell");
-  toggleCells.forEach((cell, index) => {
+  toggleCells.forEach((cell) => {
     cell.classList.remove("opened");
     cell.classList.add("closed");
   });
+}
+
+// function to reset aside and table when aside is closed
+function activityOff() {
+  const activeRow = document.querySelectorAll("tr.active");
+  activeRow.forEach((row) => {
+    row.classList.remove("active");
+  });
+  aside.classList.remove("active");
+  aside.innerHTML = "";
+  closeCells();
 }
 
 // Function to get the class based on the percentage

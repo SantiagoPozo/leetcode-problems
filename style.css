@@ -1,11 +1,62 @@
-/* Estilos generales */
+/*************************/
+/**** A simple reset *****/
+/*************************/
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+table,
+tr,
+th,
+td,
+aside,
+main,
+body,
+header,
+footer {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/*************************/
+/***** Sytles starts *****/
+/*************************/
+
 body {
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column; /* Apilado por defecto */
   font-family: Arial, sans-serif;
-  height: 100vh; /* Ocupa toda la altura de la ventana */
 }
 
 header {
@@ -14,35 +65,37 @@ header {
   text-align: center;
   border-bottom: 1px solid #e1e1e1;
   width: 100%;
-  box-sizing: border-box;
 }
 
 h1 {
-  font-size: clamp(12pt, 5vw, 30pt);
+  font-size: 5vw;
 }
 h2 {
-  font-size: clamp(10pt, 3vw, 18pt);
+  font-size: 3vw;
 }
 h3 {
-  font-size: clamp(10pt, 2vw, 16pt);
+  font-size: 2vw;
 }
-
-#search-container {
-  position: relative; 
-  display: inline-block;
-  width: clamp(200px, 80%, 400px);
-  margin-left: 10%;
+#search-container-container {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
   margin-bottom: 10px;
+}
+#search-container {
+  width: clamp(300px, 80%, 600px);
+  position: relative;
+  display: inline-block;
+  margin: auto;
 }
 
 #search {
   width: 100%;
-  padding: 10px 40px 10px 15px; 
+  padding: 10px 40px 10px 15px;
   border: 1px solid #ccc;
-  border-radius: 25px; 
-  font-size: 16px;
-  box-sizing: border-box; 
-  color: #333; 
+  border-radius: 25px;
+  box-sizing: border-box;
+  color: #333;
 }
 
 #clear-search {
@@ -52,7 +105,6 @@ h3 {
   transform: translateY(-50%); /* Ajuste para centrar perfectamente */
   background: none; /* Sin fondo */
   border: none; /* Sin borde */
-  font-size: 20px; /* Tamaño del aspa */
   cursor: pointer; /* Cambiar el cursor al pasar por encima */
   color: #666; /* Color del aspa */
 }
@@ -61,74 +113,108 @@ h3 {
   color: #333; /* Cambiar color al pasar por encima */
 }
 
-main {
-  flex-grow: 1;
-  flex-basis: 40%;
-  padding: 15px;
-  box-sizing: border-box;
-}
-
 .difficulty-button {
   width: 100%;
+  border: 1px solid darkred;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  font-size: clamp(8pt, 1.6vw, 16pt);
+}
+.difficulty-button.green {
+  border-color: green;
+}
+.difficulty-button.yellow {
+  border-color: rgb(154, 154, 11);
 }
 
-aside {
-  padding: 15px;
-  transition: flex-basis ease 0.3s;
+tr {
+  transition: all ease 0.3s;
+}
+
+tr.active {
+  border-bottom: 2px solid #2a6496;
 }
 
 aside:not(.active) {
-  flex-grow: 0;
-  flex-basis: 0;
+  display: none;
 }
 
 aside.active {
-  flex-grow: 1;
-  flex-basis: 40%;
-  overflow-y: auto;
+  display: block;
+  position: absolute;
+  z-index: 1;
+  top: 5vw;
+  left: 5%;
+  box-sizing: border-box;
+  width: 90%;
+  padding: 5px;
+  background-color: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-left: 2px solid #2a6496;
+  border-right: 2px solid #2a6496;
+  border-bottom: 2px solid #2a6496;
 }
 
-aside > div:first-child {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 1.5em;
-  margin: 0;
-  padding: 0;
+#code-container-container {
+  background: #222;
 }
 
-aside #close {
-  border: 0 none;
-  margin: 0;
-  padding: 0;
-  color: #2a6496;
-  text-align: center;
-  padding: 4px;
+aside #close-cross {
+  position: absolute;
+  top: 10px;
+  right: 5px;
   cursor: pointer;
-  background: white;
-  font-size: 1.5em;
+  border: 0 none;
+  color: #2a6496;
+  background-color: transparent;
+}
+
+aside #close-word {
+  position: relative;
+  left: calc(50% - 3em);
+  width: 6em;
+  padding: 10px 20px;
+  background-color: #f5f2f0;
+  margin-top: 10px;
+  color: #2a6496;
+  border-radius: 5px;
+  border: 1px solid #2a6496;
+}
+
+aside h3 {
+  margin: 10px 0;
+}
+
+aside p {
+  margin: 10px;
 }
 
 #code-container {
   margin: 0;
-  padding: 0;
+  padding: 5px;
 }
 
 #description-container {
   font-family: Arial, sans-serif;
-  color: #333; /
+  color: #333;
+}
+/* first paragraph of descriptio-container */
+
+#description-container p:first-of-type {
+  padding-right: 50px;
 }
 
 h1,
 h2,
 h3 {
-  color: #2a6496; 
+  color: #2a6496;
 }
 
 #description-container ul#datasheet {
-  list-style-type: none; 
-  padding-left: 0; 
-  margin-bottom: 20px; 
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 20px;
 }
 
 #description-container ul#datasheet li {
@@ -148,32 +234,25 @@ h3 {
   font-family: "Courier New", Courier, monospace; /* Optional: Monospaced font for technical details */
 }
 
-#description-container .metrics-container {
-  display: flex;
-  justify-content: space-between; /* Distributes space between the two sections */
-  gap: 20px; /* Space between the sections */
-}
-
 #description-container section#runtime,
 #description-container section#memory {
   flex: 1; /* Both sections will take equal space */
 }
 
 footer ul {
-  list-style-type: none; /* Removes the bullet points */
-  padding: 0; /* Removes default padding */
-  margin: 0; /* Removes default margin */
-  display: flex; /* Makes the list items appear in one line */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
 }
 
 footer li {
-  margin-right: 15px; /* Adds space between list items */
-  font-size: 0.9em; /* Makes the text slightly smaller */
+  margin-right: 15px;
+  font-size: 0.9em;
 }
 
 footer a {
-  text-decoration: none; /* Removes the underline from links */
-  color: #3a3f58; /* Dark gray with a pinch of blue */
+  text-decoration: none;
+  color: #3a3f58;
 }
 
 footer a:hover {
@@ -264,6 +343,7 @@ table {
   border-collapse: collapse;
   margin-bottom: 20px;
 }
+
 table td,
 table th {
   padding: 5px;
@@ -280,16 +360,19 @@ table a {
   font-weight: bold;
 }
 
-
 table th {
   background-color: #f2f2f2; /* Light gray background for table headers */
 }
 
 table tr:nth-child(2n) {
-  background-color: #d2d2d2;
+  background-color: #fcc0d2;
 }
+table tr:nth-child(2n + 1) {
+  background-color: rgb(251, 252, 192);
+}
+
 .red {
-  color: red;
+  color: darkred;
 }
 .yellow {
   color: rgb(154, 154, 11);
@@ -305,33 +388,55 @@ table tr:nth-child(2n) {
 /********************************/
 
 @media (min-width: 1200px) {
-  body {
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  header {
-    flex: 0 1 100%;
-  }
-
-  main {
-    flex-basis: 0;
-    flex-grow: 1;
-    height: calc(100vh - 60px);
-  }
-
   aside.active {
-    flex-basis: 0;
-    flex-grow: 1;
-    overflow-y: auto;
     padding: 15px;
     border-left: 1px solid #e1e1e1;
     box-sizing: border-box;
   }
 
   aside {
-    flex-basis: 10px;
-    flex-grow: 0;
     transition: flex-grow 0.3s ease;
+  }
+}
+
+/************************************/
+/************************************/
+/** Layout para pantallas medianas **/
+/************************************/
+/************************************/
+
+@media (max-width: 430px) {
+  main {
+    margin: 0;
+    padding: 0;
+  }
+  aside.active {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 5px;
+    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-left: 2px solid #2a6496;
+    border-right: 2px solid #2a6496;
+    border-bottom: 2px solid #2a6496;
+  }
+
+  tr.active {
+    border-left: 2px solid #2a6496;
+    border-right: 2px solid #2a6496;
+  }
+
+  th span.vertical {
+    transform: rotate(180deg);
+    writing-mode: vertical-lr;
+  }
+
+  .difficulty-button {
+    font-weight: lighter;
   }
 }

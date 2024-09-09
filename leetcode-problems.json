@@ -2,7 +2,7 @@
   {
     "id": "4",
     "title": "Median of Two Sorted Arrays",
-    "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.",
+    "description": "<p>Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.</p>",
     "topics": ["Array", "Binary Search", "Divide And Conquer"],
     "runtime": {
       "time": 75,
@@ -26,7 +26,7 @@
   {
     "id": "30",
     "title": "Substring with Concatenation of All Words",
-    "description": "Given a string s and a list of words of the same length, find all starting indices of substring(s) in s that is a concatenation of each word exactly once without any intervening characters.",
+    "description": "<p>Given a string s and a list of words of the same length, find all starting indices of substring(s) in s that is a concatenation of each word exactly once without any intervening characters.</p>",
     "topics": ["Hash Table", "String", "Sliding Window"],
     "runtime": {
       "time": 500,
@@ -49,7 +49,7 @@
   {
     "id": "23",
     "title": "Merge k Sorted Lists",
-    "description": "You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.",
+    "description": "<p>You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.</p>",
     "topics": [
       "Linked List",
       "Divide And Conquer",
@@ -125,7 +125,7 @@
   {
     "id": "566",
     "title": "Reshape the Matrix",
-    "description": "In MATLAB, there is a handy function called 'reshape' which can reshape an m x n matrix into a new one with a different size r x c keeping its original data. You are given an m x n matrix mat and two integers r and c representing the number of rows and the number of columns of the wanted reshaped matrix.",
+    "description": "<p>In MATLAB, there is a handy function called 'reshape' which can reshape an m x n matrix into a new one with a different size r x c keeping its original data. You are given an m x n matrix mat and two integers r and c representing the number of rows and the number of columns of the wanted reshaped matrix.</p>",
     "topics": ["Array", "Matrix", "Simulation"],
     "runtime": {
       "time": 66,
@@ -148,7 +148,7 @@
   {
     "id": "30",
     "title": "Substring with Concatenation of All Words",
-    "description": "Given a string s and a list of words of the same length, find all starting indices of substring(s) in s that is a concatenation of each word exactly once without any intervening characters.",
+    "description": "<p>Given a string s and a list of words of the same length, find all starting indices of substring(s) in s that is a concatenation of each word exactly once without any intervening characters.</p>",
     "topics": ["Hash Table", "String", "Sliding Window"],
     "runtime": {
       "time": 515,
@@ -171,7 +171,8 @@
   {
     "id": "1945",
     "title": "Sum of Digits of String After Convert",
-    "description": "You are given a string s consisting of lowercase English letters, and an integer k. First, convert s into an integer by replacing each letter with its position in the alphabet (i.e., replace 'a' with 1, 'b' with 2, ..., 'z' with 26). Then, transform the integer by replacing it with the sum of its digits. Repeat the transformation k times in total.",
+    "description": "<p>You are given a string s consisting of lowercase English letters, and an integer k. First, convert s into an integer by replacing each letter with its position in the alphabet (i.e., replace 'a' with 1, 'b' with 2, ..., 'z' with 26). Then, transform the integer by replacing it with the sum of its digits. Repeat the transformation k times in total.</p>",
+
     "topics": ["String", "Simulation"],
     "runtime": {
       "time": 61,
@@ -240,7 +241,8 @@
   {
     "id": "2798",
     "title": "Delete Nodes from Linked List Present in Array",
-    "description": "You are given an array of integers nums and the head of a linked list. Return the head of the modified linked list after removing all nodes from the linked list that have a value that exists in nums.",
+    "description": "<p>You are given an array of integers nums and the head of a linked list. Return the head of the modified linked list after removing all nodes from the linked list that have a value that exists in nums.</p>",
+
     "topics": ["Array", "Hash Table", "Linked List"],
     "runtime": {
       "time": 338,
@@ -263,7 +265,7 @@
   {
     "id": "1367",
     "title": "Linked List in Binary Tree",
-    "description": "Given a binary tree root and a linked list with the head node, determine if the linked list is a subpath of the tree. The linked list needs to match a downward path from the root to a leaf.",
+    "description": "<p>Given a binary tree root and a linked list with the head node, determine if the linked list is a subpath of the tree. The linked list needs to match a downward path from the root to a leaf.</p>",
     "topics": [
       "Linked List",
       "Tree",
@@ -292,7 +294,7 @@
   {
     "id": "725",
     "title": "Split Linked List in Parts",
-    "description": "Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts. The length of each part should be as equal as possible: no two parts should have a size differing by more than one. This may lead to some parts being null.",
+    "description": "<p>Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts. The length of each part should be as equal as possible: no two parts should have a size differing by more than one.<p></p>This may lead to some parts being null.</p>",
     "topics": ["Linked List"],
     "runtime": {
       "time": 62,

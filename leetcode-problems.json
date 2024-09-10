@@ -313,5 +313,73 @@
     "solved": "Sep 08, 2024",
     "notes": "",
     "code": "/**\n * @param {ListNode} head\n * @param {number} k\n * @return {ListNode[]}\n */\n//  Definition for singly-linked list.\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\nconst splitListToParts = function (head, k) {\n  let l = 0;\n  let node = head;\n  while (node) {\n    l++;\n    node = node.next;\n  }\n  const avarageLength = l / k;\n  const numOfPartsLonger = l % k;\n  const parts = [];\n  for (let i = 0; i < k; i++) {\n    let part = new ListNode();\n    let partHead = part;\n    for (let j = 0; j <= avarageLength + (i < numOfPartsLonger ? 0 : -1); j++) {\n      part.next = new ListNode(head.val);\n      part = part.next;\n      head = head.next;\n    }\n    parts.push(partHead.next);\n  }\n  return parts;\n};"
+  },
+  {
+    "id": "2786",
+    "title": "Spiral Matrix IV",
+    "description": "<p>You are given two integers m and n, which represent the dimensions of a matrix.</p><p>You are also given the head of a linked list of integers.</p><p>Generate an m x n matrix that contains the integers in the linked list presented in spiral order (clockwise), starting from the top-left of the matrix. If there are remaining empty spaces, fill them with -1.</p><p>Return the generated matrix.</p>",
+    "topics": ["Array", "Linked List", "Matrix", "Simulation"],
+    "attempts": [
+      {
+        "date": "Sep 10, 2024",
+        "runtime": {
+          "time": 556,
+          "beats": 5.33,
+          "complexity": "O(m * n)"
+        },
+        "memory": {
+          "space": 80.07,
+          "beats": 100,
+          "complexity": "O(m * n)"
+        },
+        "code": "function ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\nconst spiralMatrix = function (m, n, head) {\n  if (m === 0 || n === 0) return [];\n\n  let matrix = Array.from({ length: m }, () =>\n    Array.from({ length: n }, () => -1)\n  );\n  let node = head;\n\n  let col = -1,\n    row = 0;\n\n  const takeKsteps = (K, direction) => {\n    for (let i = 0; i < K; i++) {\n      if (!node) return;\n\n      if (direction === 1) {\n        col++;\n      } else if (direction === 2) {\n        row++;\n      } else if (direction === 3) {\n        col--;\n      } else if (direction === 4) {\n        row--;\n      }\n\n      matrix[row][col] = node.val;\n      node = node.next;\n    }\n  };\n\n  let direction = 1;\n  let vSteps = m,\n    hSteps = n;\n\n  while (vSteps > 0 && hSteps > 0 && node) {\n    if (direction === 1 || direction === 3) {\n      takeKsteps(hSteps, direction);\n      vSteps--;\n    } else if (direction === 2 || direction === 4) {\n      takeKsteps(vSteps, direction);\n      hSteps--;\n    }\n\n    direction++;\n    if (direction === 5) direction = 1;\n  }\n\n  return matrix;\n};"
+      },
+      {
+        "date": "Sep 10, 2024",
+        "runtime": {
+          "time": 446,
+          "beats": 61.33,
+          "complexity": "O(m * n)"
+        },
+        "memory": {
+          "space": 86.84,
+          "beats": 77.33,
+          "complexity": "O(m * n)"
+        },
+        "code": "function ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\nconst spiralMatrix = function (m, n, head) {\n  if (m === 0 || n === 0) return [];\n  const matrix = Array.from({ length: m }, () => Array(n).fill(-1));\n  let node = head;\n  let col = -1,\n    row = 0;\n  let vSteps = m,\n    hSteps = n;\n\n  while (vSteps > 0 && hSteps > 0 && node) {\n    // right\n    for (let i = 0; i < hSteps; i++) {\n      col++;\n      matrix[row][col] = node.val;\n      if (node.next) {\n        node = node.next;\n      } else {\n        return matrix;\n      }\n    }\n    vSteps--;\n\n    // down\n    if (vSteps === 0) return matrix;\n    for (let i = 0; i < vSteps; i++) {\n      row++;\n      matrix[row][col] = node.val;\n      if (node.next) {\n        node = node.next;\n      } else {\n        return matrix;\n      }\n    }\n    hSteps--;\n\n    // left\n    if (hSteps === 0) return matrix;\n    for (let i = 0; i < hSteps; i++) {\n      col--;\n      matrix[row][col] = node.val;\n      if (node.next) {\n        node = node.next;\n      } else {\n        return matrix;\n      }\n    }\n    vSteps--;\n\n    // up\n    if (vSteps === 0) return matrix;\n    for (let i = 0; i < vSteps; i++) {\n      row--;\n      matrix[row][col] = node.val;\n      if (node.next) {\n        node = node.next;\n      } else {\n        return matrix;\n      }\n    }\n    hSteps--;\n  }\n\n  return matrix;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/spiral-matrix-iv/",
+    "here_url": "spiral-matrix-iv",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "insert-greatest-common-divisors-in-linked-list",
+    "title": "Insert Greatest Common Divisors in Linked List",
+    "description": "<p>Given the head of a linked list <code>head</code>, in which each node contains an integer value.</p><p>Between every pair of adjacent nodes, insert a new node with a value equal to the greatest common divisor of them.</p><p>Return the linked list after insertion.</p><p>The greatest common divisor of two numbers is the largest positive integer that evenly divides both numbers.</p>",
+    "topics": ["Linked List", "Math", "Number Theory"],
+    "attempts": [
+      {
+        "date": "Sep 10, 2024",
+        "runtime": {
+          "time": 88,
+          "beats": 83.07,
+          "complexity": "O(n^2)"
+        },
+        "memory": {
+          "space": 57.85,
+          "beats": 88.89,
+          "complexity": "O(n)"
+        },
+        "code": "// Definition for singly-linked list.\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\n/**\n * @param {ListNode} head\n * @return {ListNode}\n */\n\nvar insertGreatestCommonDivisors = function (head) {\n  let node1 = head;\n  function gcd(a, b) {\n    if (b === 0) {\n      return a;\n    }\n    return gcd(b, a % b);\n  }\n  while (node1.next) {\n    let node2 = node1.next;\n    let newNode = new ListNode(gcd(node1.val, node2.val), node2);\n    node1.next = newNode;\n    node1 = node2;\n  }\n  return head;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list/",
+    "here_url": "insert-greatest-common-divisors-in-linked-list",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
   }
 ]

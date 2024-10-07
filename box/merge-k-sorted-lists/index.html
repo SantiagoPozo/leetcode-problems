@@ -9,36 +9,49 @@
         color: green;
         font-weight: bold;
       }
-
       .failed {
         color: red;
         font-weight: bold;
       }
+      .head {
+        color: blue;
+        font-weight: lighter;
+        font-style: italic;
+        display: inline-block;
+        width: 8em;
+      }
+      p {
+        margin-bottom: 20px;
+      }
     </style>
-
-    <title>Test construct2DArray</title>
+    <title>Testing mergeKLists Function</title>
     <script src="script.js"></script>
   </head>
   <body>
-    <h1>Testing construct2DArray Function</h1>
+    <h1>Testing mergeKLists Function</h1>
     <div id="test-results"></div>
-
     <script>
-      // Función para cargar el archivo JSON y realizar las pruebas
       fetch("data.json")
         .then((response) => response.json())
         .then((data) => {
           const resultsDiv = document.getElementById("test-results");
-
-          // Medir el tiempo total de todas las pruebas
           const totalStartTime = performance.now();
+          const testCasesToRun = data.filter
+            ? data.testCases.filter((_, index) =>
+                data.filter.includes(index + 1)
+              )
+            : data.testCases;
 
-          data.forEach((testCase, index) => {
-            const { original, m, n, expected } = testCase;
+          testCasesToRun.forEach((testCase, index) => {
+            const { lists, expected } = testCase;
+
+            // Convertir cada array en 'lists' a una lista enlazada
+            const linkedLists = lists.map(arrayToList);
 
             // Medir el tiempo de ejecución de cada prueba
             const startTime = performance.now();
-            const result = construct2DArray(original, m, n);
+            const mergedList = mergeKLists(linkedLists);
+            const result = listToArray(mergedList);
             const endTime = performance.now();
             const executionTime = (endTime - startTime).toFixed(2);
 
@@ -53,22 +66,44 @@
             const resultElement = document.createElement("p");
             resultElement.innerHTML = `<span class="${
               testPassed ? "passed" : "failed"
-            }"><b>${testResultText}</b></span> - Expected: ${JSON.stringify(
+            }"><b>${testResultText}</b></span><br /><span class="head">Input:</span> lists: ${JSON.stringify(
+              lists
+            )}<br /><span class="head">Expected:</span> ${JSON.stringify(
               expected
-            )}, Got: ${JSON.stringify(result)}. Time: ${executionTime} ms`;
+            )}<br /><span class="head">Got:</span> ${JSON.stringify(
+              result
+            )}. Time: ${executionTime} ms`;
             resultsDiv.appendChild(resultElement);
           });
 
-          // Medir el tiempo total de ejecución
           const totalEndTime = performance.now();
           const totalExecutionTime = (totalEndTime - totalStartTime).toFixed(2);
-
-          // Mostrar el tiempo total empleado en un h2
           const totalTimeElement = document.createElement("h2");
-          totalTimeElement.textContent = `Total Time: ${totalExecutionTime} ms`;
+          totalTimeElement.textContent = `Total Time for all tests: ${totalExecutionTime} ms`;
           resultsDiv.appendChild(totalTimeElement);
         })
         .catch((error) => console.error("Error loading data.json:", error));
+
+      function arrayToList(arr) {
+        if (!arr.length) return null;
+        let dummy = new ListNode(0);
+        let current = dummy;
+        for (let val of arr) {
+          current.next = new ListNode(val);
+          current = current.next;
+        }
+        return dummy.next;
+      }
+
+      function listToArray(list) {
+        const result = [];
+        let current = list;
+        while (current) {
+          result.push(current.val);
+          current = current.next;
+        }
+        return result;
+      }
     </script>
   </body>
 </html>

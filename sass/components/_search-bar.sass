@@ -1,0 +1,36 @@
+/**************************/
+/*** search bar styles ****/
+/**************************/
+
+#search-container-container
+    width: 100%
+    display: flex
+    margin-top: 10px
+    margin-bottom: 10px
+
+#search-container
+    width: clamp(300px, 80%, 600px)
+    position: relative
+    display: inline-block
+    margin: auto
+
+#search
+    width: 100%
+    padding: 10px 40px 10px 15px
+    border: 1px solid #ccc
+    border-radius: 25px
+    box-sizing: border-box
+    color: #333
+
+#clear-search
+    position: absolute // Posicionamiento absoluto dentro del contenedor
+    right: 10px // Espacio desde la derecha
+    top: 50% // Centrar verticalmente
+    transform: translateY(-50%) // Ajuste para centrar perfectamente
+    background: none // Sin fondo
+    border: none // Sin borde
+    cursor: pointer // Cambiar el cursor al pasar por encima
+    color: #666 // Color del aspa
+
+#clear-search:hover
+    color: #333 // Cambiar color al pasar por encima

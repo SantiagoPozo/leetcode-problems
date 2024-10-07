@@ -1,0 +1,48 @@
+.card
+  display: flex
+  gap: 1ch
+  flex-direction: column
+  justify-content: space-between
+  padding: 1ch
+  background-color: white
+  border-radius: 1ch
+  code 
+    font-size: $font-size
+    color: $dark-gray
+
+  .aux 
+    .date
+      font-size: $font-size-small
+      color: #666
+    .monkey
+      font-size: $font-size-xx-large
+      cursor: pointer
+
+  .price::after 
+    content: ""
+    display: inline-block
+    width: 1em
+    height: 1em
+    background-image: url('img/crown.svg')
+    background-size: contain
+    background-repeat: no-repeat
+    margin-left: .7ch
+    vertical-align: middle
+
+  .green 
+    color: $green
+
+  .shit::after
+    content: ""
+    display: inline-block
+    width: 1em
+    height: 1em
+    background-image: url('img/poop.svg')
+    background-size: contain
+    background-repeat: no-repeat
+    margin-left: .7ch
+    vertical-align: middle
+
+  .mini
+    font-size: $font-size-small
+    color: $dark-gray

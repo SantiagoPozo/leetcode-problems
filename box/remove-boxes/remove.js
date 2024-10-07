@@ -4,35 +4,6 @@
  */
 var removeBoxes = function (boxes) {
   let score = 0;
-  let newBoxes = [];
-
-  const removeTrivialBoxes = (boxes) => {
-    const sections = {};
-    for (let i = 0; i < boxes.length; i++) {
-      if (i === 0 || boxes[i] !== boxes[i - 1]) {
-        //empezamos nueva sección
-        if (!sections[boxes[i]]) sections[boxes[i]] = { count: 0, row: 0 };
-        sections[boxes[i]]["count"] = sections[boxes[i]]["count"] + 1;
-      }
-      sections[boxes[i]]["row"] = sections[boxes[i]]["row"] + 1;
-    }
-
-    const newBoxes = [];
-    let sectionScored = false;
-    for (let i = 0; i < boxes.length; i++) {
-      if (i === 0 || boxes[i] !== boxes[i - 1]) sectionScored = false;
-
-      if (sections[boxes[i]]["count"] > 1) newBoxes.push(boxes[i]);
-      else if (!sectionScored) {
-        score = score + sections[boxes[i]]["row"] * sections[boxes[i]]["row"];
-        sectionScored = true;
-      }
-    }
-    if (newBoxes.length < boxes.length) return removeTrivialBoxes(newBoxes);
-
-    return [score, newBoxes];
-  };
-  [score, newBoxes] = removeTrivialBoxes(boxes);
 
   // dynamic programming and memoization
   const memo = {};
@@ -54,7 +25,7 @@ var removeBoxes = function (boxes) {
     return maxScore;
   };
 
-  score = score + removeBoxes(newBoxes);
+  score = score + removeBoxes(boxes);
   return score;
 };
 

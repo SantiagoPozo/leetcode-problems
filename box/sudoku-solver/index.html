@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sudoku Solver</title>
+    <style>
+      body {
+        background-color: #f5f0e6; /* Color de fondo café claro */
+        color: #333; /* Color de texto oscuro */
+        font-family: "Times New Roman", Times, serif; /* Fuente clásica */
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2em;
+        margin-bottom: 20px;
+      }
+
+      .sudoku-board {
+        display: grid;
+        grid-template-columns: repeat(9, 1fr);
+        gap: 0px;
+        max-width: 472px;
+        margin: 0 auto 50px; /* Centrado y con margen inferior */
+        border: 2px solid #333;
+        padding: 5px;
+        background-color: #e0d6c2; /* Color de fondo de tablero */
+      }
+
+      .sudoku-board .cell:nth-child(3n) {
+        margin-right: 5px;
+      }
+
+      .sudoku-board .cell:nth-child(27),
+      .sudoku-board .cell:nth-child(54) {
+        margin-bottom: 5px;
+      }
+
+      .cell {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.5em;
+        border: 1px solid #333;
+        background-color: #fff; /* Fondo blanco para celdas */
+      }
+
+      .cell.multiple {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        font-size: 1em;
+        line-height: 80%;
+        gap: 0px;
+        padding: 0;
+      }
+
+      .mini-cell {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .result-section {
+        text-align: center;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sudoku Solver</h1>
+
+    <!-- Sudoku Inicial -->
+    <div class="sudoku-board" id="initial-board">
+      <!-- Las celdas del Sudoku inicial se insertarán aquí mediante JavaScript -->
+    </div>
+
+    <!-- Sudoku Resuelto -->
+    <div class="result-section">
+      <h2>Resultado Final</h2>
+      <div class="sudoku-board" id="solved-board">
+        <!-- Las celdas del Sudoku resuelto se insertarán aquí mediante JavaScript -->
+      </div>
+    </div>
+    <script src="script.js"></script>
+
+    <script>
+      const initialBoard = [
+        ["5", "3", ".", ".", "7", ".", ".", ".", "."],
+        ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+        [".", "9", "8", ".", ".", ".", ".", "6", "."],
+        ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+        ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+        ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+        [".", "6", ".", ".", ".", ".", "2", "8", "."],
+        [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+        [".", ".", ".", ".", "8", ".", ".", "7", "9"],
+      ];
+
+      const solvedBoard = JSON.parse(JSON.stringify(initialBoard)); // Copia del tablero inicial para manipularlo
+
+      // Función para crear la visualización del tablero con miniceldas
+      const createSudokuGrid = (board, containerId) => {
+        const container = document.getElementById(containerId);
+        container.innerHTML = ""; // Limpiar cualquier contenido previo
+
+        for (let row = 0; row < 9; row++) {
+          for (let col = 0; col < 9; col++) {
+            const cell = document.createElement("div");
+            if (board[row][col].length > 1) {
+              // Si la celda tiene múltiples posibilidades
+              cell.className = "cell multiple";
+              for (let i = 1; i <= 9; i++) {
+                const miniCell = document.createElement("div");
+                miniCell.className = "mini-cell";
+                miniCell.textContent = board[row][col].includes(i.toString())
+                  ? i.toString()
+                  : "";
+                cell.appendChild(miniCell);
+              }
+            } else {
+              // Si la celda tiene un único número o está vacía
+              cell.className = "cell";
+              cell.textContent = board[row][col] === "." ? "" : board[row][col];
+            }
+            container.appendChild(cell);
+          }
+        }
+      };
+
+      // Mostrar Sudoku inicial
+      createSudokuGrid(initialBoard, "initial-board");
+
+      // Resolver Sudoku
+      solveSudoku(solvedBoard);
+
+      // Mostrar Sudoku resuelto
+      createSudokuGrid(solvedBoard, "solved-board");
+    </script>
+  </body>
+</html>

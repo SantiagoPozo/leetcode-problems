@@ -4,263 +4,243 @@
     "title": "Median of Two Sorted Arrays",
     "description": "<p>Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.</p>",
     "topics": ["Array", "Binary Search", "Divide And Conquer"],
-    "runtime": {
-      "time": 75,
-      "beats": 99.04,
-      "complexity": "O(log(Min(m,n)))"
-    },
-    "memory": {
-      "space": 54.07,
-      "beats": 85.19,
-      "complexity": "O(1)",
-      "required_complexity": "Not "
-    },
+    "attempts": [
+      {
+        "date": "Aug 25, 2024",
+        "runtime": {
+          "time": 75,
+          "beats": 99.04,
+          "complexity": "O(log(Min(m,n)))"
+        },
+        "memory": {
+          "space": 54.07,
+          "beats": 85.19,
+          "complexity": "O(1)"
+        },
+        "code": "const findMedianSortedArrays = function (nums1, nums2) {\n  const l1 = nums1.length, l2 = nums2.length;\n  if (l1 === 0 || l2 === 0 || (l1 === 1 && l2 === 1)) {\n    final = nums1.concat(nums2);\n    l = final.length;\n    if (l % 2) return final[(l - 1) / 2];\n    else return (final[l / 2 - 1] + final[l / 2]) / 2;\n  } else {\n    let shiftNums1 = true;\n    nums1[0] > nums2[0] && (shiftNums1 = false);\n    nums1[l1 - 1] > nums2[l2 - 1] ? nums1.pop() : nums2.pop();\n    shiftNums1 ? nums1.shift() : nums2.shift();\n    return findMedianSortedArrays(nums1, nums2);\n  }\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
     "here_url": "median-of-two-sorted-arrays",
     "language": "JavaScript",
     "difficulty": "hard",
-    "solved": "Aug 25, 2024",
-    "notes": "There was a required complexity: O(log(m + n)) less than the one I used.",
-    "code": "const findMedianSortedArrays = function (nums1, nums2) {\n  const l1 = nums1.length, l2 = nums2.length;\n  if (l1 === 0 || l2 === 0 || (l1 === 1 && l2 === 1)) {\n    final = nums1.concat(nums2);\n    l = final.length;\n    if (l % 2) return final[(l - 1) / 2];\n    else return (final[l / 2 - 1] + final[l / 2]) / 2;\n  } else {\n    let shiftNums1 = true;\n    nums1[0] > nums2[0] && (shiftNums1 = false);\n    nums1[l1 - 1] > nums2[l2 - 1] ? nums1.pop() : nums2.pop();\n    shiftNums1 ? nums1.shift() : nums2.shift();\n    return findMedianSortedArrays(nums1, nums2);\n  }\n};"
+    "notes": "There was a required complexity: O(log(m + n)) less than the one I used."
   },
   {
     "id": "30",
     "title": "Substring with Concatenation of All Words",
     "description": "<p>Given a string s and a list of words of the same length, find all starting indices of substring(s) in s that is a concatenation of each word exactly once without any intervening characters.</p>",
     "topics": ["Hash Table", "String", "Sliding Window"],
-    "runtime": {
-      "time": 500,
-      "beats": 75.29,
-      "complexity": "O(n^2)"
-    },
-    "memory": {
-      "space": 79.46,
-      "beats": 5.45,
-      "complexity": "O(n)"
-    },
+    "attempts": [
+      {
+        "date": "Aug 30, 2024",
+        "runtime": {
+          "time": 500,
+          "beats": 75.29,
+          "complexity": "O(n^2)"
+        },
+        "memory": {
+          "space": 79.46,
+          "beats": 5.45,
+          "complexity": "O(n)"
+        },
+        "code": "const findSubstring = function (s, words) {\n  const wL = words[0].length;\n  const substringCount = wL * words.length;\n  const sol = [];\n  const theCollection = {};\n\n  for (let i = 0; i <= s.length - substringCount; i++) {\n    const substring = s.slice(i, i + substringCount);\n    if (theCollection[substring] === true) {\n      sol.push(i);\n      continue;\n    }\n    if (theCollection[substring] === false) {\n      continue;\n    }\n    if (theCollection[substring] === undefined) {\n      if (\n        isAPermutation(\n          Array.from({ length: substring.length / wL }, (_, j) =>\n            substring.slice(j * wL, j * wL + wL)\n          ),\n          words\n        )\n      ) {\n        sol.push(i);\n        theCollection[substring] = true;\n      } else {\n        theCollection[substring] = false;\n      }\n    }\n  }\n  return sol;\n};\n\nfunction isAPermutation(arr, words) {\n  const wordCount = {};\n  for (let word of words) {\n    wordCount[word] = (wordCount[word] || 0) + 1;\n  }\n  const currentCount = {};\n  for (let word of arr) {\n    if (!wordCount[word]) return false;\n    currentCount[word] = (currentCount[word] || 0) + 1;\n    if (currentCount[word] > wordCount[word]) return false;\n  }\n  return true;\n}"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
     "here_url": "substring-with-concatenation-of-all-words",
     "language": "JavaScript",
     "difficulty": "hard",
-    "solved": "Aug 30, 2024",
-    "notes": "",
-    "code": "const findSubstring = function (s, words) {\n  const wL = words[0].length;\n  const substringCount = wL * words.length;\n  const sol = [];\n  const theCollection = {};\n\n  for (let i = 0; i <= s.length - substringCount; i++) {\n    const substring = s.slice(i, i + substringCount);\n    if (theCollection[substring] === true) {\n      sol.push(i);\n      continue;\n    }\n    if (theCollection[substring] === false) {\n      continue;\n    }\n    if (theCollection[substring] === undefined) {\n      if (\n        isAPermutation(\n          Array.from({ length: substring.length / wL }, (_, j) =>\n            substring.slice(j * wL, j * wL + wL)\n          ),\n          words\n        )\n      ) {\n        sol.push(i);\n        theCollection[substring] = true;\n      } else {\n        theCollection[substring] = false;\n      }\n    }\n  }\n  return sol;\n};\n\nfunction isAPermutation(arr, words) {\n  const wordCount = {};\n  for (let word of words) {\n    wordCount[word] = (wordCount[word] || 0) + 1;\n  }\n  const currentCount = {};\n  for (let word of arr) {\n    if (!wordCount[word]) return false;\n    currentCount[word] = (currentCount[word] || 0) + 1;\n    if (currentCount[word] > wordCount[word]) return false;\n  }\n  return true;\n}"
-  },
-  {
-    "id": "23",
-    "title": "Merge k Sorted Lists",
-    "description": "<p>You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.</p>",
-    "topics": [
-      "Linked List",
-      "Divide And Conquer",
-      "Heap (Priority Queue)",
-      "Merge Sort"
-    ],
-    "runtime": {
-      "time": 0,
-      "beats": 0,
-      "complexity": "O(log(Min(m,n)))"
-    },
-    "memory": {
-      "space": 0,
-      "beats": 0,
-      "complexity": ""
-    },
-    "leetcode_url": "https://leetcode.com/problems/merge-k-sorted-lists/",
-    "here_url": "merge-k-sorted-lists/",
-    "language": "JavaScript",
-    "difficulty": "hard",
-    "solved": "I'll be back... ",
-    "notes": "",
-    "code": ""
+    "notes": ""
   },
   {
     "id": "1894",
     "title": "Find the Student that Will Replace the Chalk",
     "description": "<p>There are n students in a class numbered from 0 to n - 1. The teacher will give each student a problem starting with the student number 0, then the student number 1, and so on until the teacher reaches the student number n - 1. After that, the teacher will restart the process, starting with the student number 0 again.</p><p>You are given a 0-indexed integer array chalk and an integer k. There are initially k pieces of chalk. When the student number i is given a problem to solve, they will use chalk[i] pieces of chalk to solve that problem. However, if the current number of chalk pieces is strictly less than chalk[i], then the student number i will be asked to replace the chalk.</p><p>Return the index of the student that will replace the chalk pieces.</p>",
     "topics": ["Array", "Binary Search", "Simulation", "Prefix Sum"],
-    "runtime": {
-      "time": 76,
-      "beats": 69.88,
-      "complexity": "O(N)",
-      "required_complexity": "O(N)"
-    },
-    "memory": {
-      "space": 59.93,
-      "beats": 71.08,
-      "complexity": "O(1)",
-      "required_complexity": "O(1)"
-    },
+    "attempts": [
+      {
+        "date": "Sep 02, 2024",
+        "runtime": {
+          "time": 76,
+          "beats": 69.88,
+          "complexity": "O(N)"
+        },
+        "memory": {
+          "space": 59.93,
+          "beats": 71.08,
+          "complexity": "O(1)"
+        },
+        "code": "var chalkReplacer = function (chalk, k) {\n  let remainder = k % chalk.reduce((a, b) => a + b, 0);\n  for (let i = 0; i < chalk.length; i++) {\n    remainder -= chalk[i];\n    if (remainder < 0) return i;\n  }\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/find-the-student-that-will-replace-the-chalk/",
     "here_url": "find-the-student-that-will-replace-the-chalk/",
     "language": "JavaScript",
     "difficulty": "medium",
-    "solved": "Sep 02, 2024",
-    "notes": "",
-    "code": "var chalkReplacer = function (chalk, k) {\n  let remainder = k % chalk.reduce((a, b) => a + b, 0);\n  for (let i = 0; i < chalk.length; i++) {\n    remainder -= chalk[i];\n    if (remainder < 0) return i;\n  }\n};"
+    "notes": ""
   },
   {
     "id": "2022",
     "title": "Convert 1D Array into 2D Array",
     "description": "<p>You are given a 0-indexed 1-dimensional (1D) integer array original, and two integers, m and n. You are tasked with creating a 2-dimensional (2D) array with m rows and n columns using all the elements from original.</p><p>The elements from indices 0 to n - 1 (inclusive) of original should form the first row of the constructed 2D array, the elements from indices n to 2 * n - 1 (inclusive) should form the second row of the constructed 2D array, and so on.</p><p>Return an m x n 2D array constructed according to the above procedure, or an empty 2D array if it is impossible.</p>",
     "topics": ["Array", "Matrix", "Simulation"],
-    "runtime": {
-      "time": 162,
-      "beats": 94.29,
-      "complexity": ""
-    },
-    "memory": {
-      "space": 69.63,
-      "beats": 68.57,
-      "complexity": ""
-    },
+    "attempts": [
+      {
+        "date": "Sep 02, 2024",
+        "runtime": {
+          "time": 162,
+          "beats": 94.29,
+          "complexity": ""
+        },
+        "memory": {
+          "space": 69.63,
+          "beats": 68.57,
+          "complexity": ""
+        },
+        "code": "var construct2DArray = function (original, m, n) {\n  if (m * n !== original.length) return [];\n  return Array.from({ length: m }, (_, i) => original.slice(i * n, i * n + n));\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/convert-1d-array-into-2d-array/",
     "here_url": "convert-1d-array-into-2d-array",
     "language": "JavaScript",
     "difficulty": "easy",
-    "solved": "Sep 02, 2024",
-    "notes": "",
-    "code": "var construct2DArray = function (original, m, n) {\n  if (m * n !== original.length) return [];\n  return Array.from({ length: m }, (_, i) => original.slice(i * n, i * n + n));\n};"
+    "notes": ""
   },
   {
     "id": "566",
     "title": "Reshape the Matrix",
     "description": "<p>In MATLAB, there is a handy function called 'reshape' which can reshape an m x n matrix into a new one with a different size r x c keeping its original data. You are given an m x n matrix mat and two integers r and c representing the number of rows and the number of columns of the wanted reshaped matrix.</p>",
     "topics": ["Array", "Matrix", "Simulation"],
-    "runtime": {
-      "time": 66,
-      "beats": 95.93,
-      "complexity": ""
-    },
-    "memory": {
-      "space": 54.83,
-      "beats": 30.74,
-      "complexity": ""
-    },
+    "attempts": [
+      {
+        "date": "Sep 02, 2024",
+        "runtime": {
+          "time": 66,
+          "beats": 95.93,
+          "complexity": ""
+        },
+        "memory": {
+          "space": 54.83,
+          "beats": 30.74,
+          "complexity": ""
+        },
+        "code": "var matrixReshape = function (mat, r, c) {\n  const m = mat.length;\n  if (m * mat[0].length !== r * c) return mat;\n  const result = [];\n  for (i = 0; i < m; i++) {\n    result.push(...mat[i]);\n  }\n  return Array.from({ length: r }, (_, i) => result.slice(i * c, i * c + c));\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/reshape-the-matrix/description/",
     "here_url": "reshape-the-matrix",
     "language": "JavaScript",
     "difficulty": "medium",
-    "solved": "Sep 02, 2024",
-    "notes": "",
-    "code": "var matrixReshape = function (mat, r, c) {\n  const m = mat.length;\n  if (m * mat[0].length !== r * c) return mat;\n  const result = [];\n  for (i = 0; i < m; i++) {\n    result.push(...mat[i]);\n  }\n  return Array.from({ length: r }, (_, i) => result.slice(i * c, i * c + c));\n};"
-  },
-  {
-    "id": "30",
-    "title": "Substring with Concatenation of All Words",
-    "description": "<p>Given a string s and a list of words of the same length, find all starting indices of substring(s) in s that is a concatenation of each word exactly once without any intervening characters.</p>",
-    "topics": ["Hash Table", "String", "Sliding Window"],
-    "runtime": {
-      "time": 515,
-      "beats": 74.63,
-      "complexity": "Unknown"
-    },
-    "memory": {
-      "space": 77.96,
-      "beats": 5.63,
-      "complexity": "Unknown"
-    },
-    "leetcode_url": "https://leetcode.com/problems/substring-with-concatenation-of-all-words/",
-    "here_url": "substring-with-concatenation-of-all-words",
-    "language": "JavaScript",
-    "difficulty": "hard",
-    "solved": "Aug 30, 2024",
-    "notes": "",
-    "code": "var findSubstring = function(s, words) {\n  const wordLen = words[0].length;\n  const allWordsLen = words.length * wordLen;\n  const wordMap = {};\n  const result = [];\n  words.forEach(word => wordMap[word] = (wordMap[word] || 0) + 1);\n  for (let i = 0; i <= s.length - allWordsLen; i++) {\n    const seen = {};\n    for (let j = 0; j < words.length; j++) {\n      const word = s.substr(i + j * wordLen, wordLen);\n      if (!wordMap[word]) break;\n      seen[word] = (seen[word] || 0) + 1;\n      if (seen[word] > wordMap[word]) break;\n      if (j + 1 === words.length) result.push(i);\n    }\n  }\n  return result;\n};"
+    "notes": ""
   },
   {
     "id": "1945",
     "title": "Sum of Digits of String After Convert",
     "description": "<p>You are given a string s consisting of lowercase English letters, and an integer k. First, convert s into an integer by replacing each letter with its position in the alphabet (i.e., replace 'a' with 1, 'b' with 2, ..., 'z' with 26). Then, transform the integer by replacing it with the sum of its digits. Repeat the transformation k times in total.</p>",
-
     "topics": ["String", "Simulation"],
-    "runtime": {
-      "time": 61,
-      "beats": 38.99,
-      "complexity": "O(n)"
-    },
-    "memory": {
-      "space": 50.06,
-      "beats": 77.99,
-      "complexity": "O(n)"
-    },
+    "attempts": [
+      {
+        "date": "Sep 03, 2024",
+        "runtime": {
+          "time": 61,
+          "beats": 38.99,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 50.06,
+          "beats": 77.99,
+          "complexity": "O(n)"
+        },
+        "code": "var getLucky = function (s, k) {\n  const array = s\n    .split(\"\")\n    .map((char) => (char.charCodeAt(0) - 96).toString())\n    .join(\"\")\n    .split(\"\")\n    .map(Number);\n  return sumOfDigits(array, k);\n};\n\nfunction sumOfDigits(array, k) {\n  let sum = array.reduce((acc, digit) => acc + digit, 0);\n  if (k === 1 || sum < 10) return sum;\n  return sumOfDigits(sum.toString().split(\"\").map(Number), k - 1);\n}"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/sum-of-digits-of-string-after-convert/",
     "here_url": "sum-of-digits-of-string-after-convert",
     "language": "JavaScript",
     "difficulty": "easy",
-    "solved": "Sep 03, 2024",
-    "notes": "",
-    "code": "var getLucky = function (s, k) {\n  const array = s\n    .split(\"\")\n    .map((char) => (char.charCodeAt(0) - 96).toString())\n    .join(\"\")\n    .split(\"\")\n    .map(Number);\n  return sumOfDigits(array, k);\n};\n\nfunction sumOfDigits(array, k) {\n  let sum = array.reduce((acc, digit) => acc + digit, 0);\n  if (k === 1 || sum < 10) return sum;\n  return sumOfDigits(sum.toString().split(\"\").map(Number), k - 1);\n}"
+    "notes": ""
   },
   {
     "id": "874",
     "title": "Walking Robot Simulation",
     "description": "<p>A robot on an infinite XY-plane starts at point (0, 0) facing north. The robot can receive a sequence of these three possible types of commands:</p><ul><li>-2: Turn left 90 degrees.</li><li>-1: Turn right 90 degrees.</li><li>1 <= k <= 9: Move forward k units, one unit at a time.</li></ul><p>Some of the grid squares are obstacles. The ith obstacle is at grid point obstacles[i] = (xi, yi). If the robot runs into an obstacle, then it will instead stay in its current location and move on to the next command.</p><p>Return the maximum Euclidean distance that the robot ever gets from the origin squared (i.e. if the distance is 5, return 25).</p>",
     "topics": ["Array", "Hash Table", "Simulation"],
-    "runtime": {
-      "time": 116,
-      "beats": 50,
-      "complexity": "O(n + k)"
-    },
-    "memory": {
-      "space": 64.41,
-      "beats": 30.95,
-      "complexity": "O(k)"
-    },
+    "attempts": [
+      {
+        "date": "Sep 04, 2024",
+        "runtime": {
+          "time": 116,
+          "beats": 50,
+          "complexity": "O(n + k)"
+        },
+        "memory": {
+          "space": 64.41,
+          "beats": 30.95,
+          "complexity": "O(k)"
+        },
+        "code": "var robotSim = function(commands, obstacles) {\n  const dx = [0, 1, 0, -1];\n  const dy = [1, 0, -1, 0];\n  let x = 0, y = 0, di = 0;\n  const obstacleSet = new Set();\n  let ans = 0;\n\n  for (let i = 0; i < obstacles.length; i++) {\n    const obstacle = obstacles[i];\n    obstacleSet.add(obstacle[0] + \"#\" + obstacle[1]);\n  }\n\n  for (let i = 0; i < commands.length; i++) {\n    const command = commands[i];\n    if (command === -2) {\n      di = (di + 3) % 4;\n    } else if (command === -1) {\n      di = (di + 1) % 4;\n    } else {\n      for (let j = 0; j < command; j++) {\n        const nx = x + dx[di];\n        const ny = y + dy[di];\n        const obstacleKey = nx + \"#\" + ny;\n        if (!obstacleSet.has(obstacleKey)) {\n          x = nx;\n          y = ny;\n          ans = Math.max(ans, x * x + y * y);\n        }\n      }\n    }\n  }\n\n  return ans;\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/walking-robot-simulation/",
     "here_url": "walking-robot-simulation",
     "language": "JavaScript",
     "difficulty": "Medium",
-    "solved": "Sep 04, 2024",
-    "notes": "",
-    "code": "var robotSim = function(commands, obstacles) {\n  const dx = [0, 1, 0, -1];\n  const dy = [1, 0, -1, 0];\n  let x = 0, y = 0, di = 0;\n  const obstacleSet = new Set();\n  let ans = 0;\n\n  for (let i = 0; i < obstacles.length; i++) {\n    const obstacle = obstacles[i];\n    obstacleSet.add(obstacle[0] + \"#\" + obstacle[1]);\n  }\n\n  for (let i = 0; i < commands.length; i++) {\n    const command = commands[i];\n    if (command === -2) {\n      di = (di + 3) % 4;\n    } else if (command === -1) {\n      di = (di + 1) % 4;\n    } else {\n      for (let j = 0; j < command; j++) {\n        const nx = x + dx[di];\n        const ny = y + dy[di];\n        const obstacleKey = nx + \"#\" + ny;\n        if (!obstacleSet.has(obstacleKey)) {\n          x = nx;\n          y = ny;\n          ans = Math.max(ans, x * x + y * y);\n        }\n      }\n    }\n  }\n\n  return ans;\n};"
+    "notes": ""
   },
   {
     "id": "2028",
     "title": "Find Missing Observations",
     "description": "<p>You have observations of n + m 6-sided dice rolls with each face numbered from 1 to 6. n of the observations went missing, and you only have the observations of m rolls. Fortunately, you have also calculated the average value of the n + m rolls.</p><p>You are given an integer array rolls of length m where rolls[i] is the value of the ith observation. You are also given the two integers mean and n.</p><p>Return an array of length n containing the missing observations such that the average value of the n + m rolls is exactly mean. If there are multiple valid answers, return any of them. If no such array exists, return an empty array.</p><p>The average value of a set of k numbers is the sum of the numbers divided by k.</p><p>Note that mean is an integer, so the sum of the n + m rolls should be divisible by n + m.</p>",
     "topics": ["Array", "Math", "Simulation"],
-    "runtime": {
-      "time": 228,
-      "beats": 77.08,
-      "complexity": "O(n)"
-    },
-    "memory": {
-      "space": 64.96,
-      "beats": 97.92,
-      "complexity": "O(1)"
-    },
+    "attempts": [
+      {
+        "date": "Sep 05, 2024",
+        "runtime": {
+          "time": 228,
+          "beats": 77.08,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 64.96,
+          "beats": 97.92,
+          "complexity": "O(1)"
+        },
+        "code": "var missingRolls = function (rolls, mean, n) {\n  const B =\n    mean * (rolls.length + n) - rolls.reduce((acc, val) => acc + val, 0);\n  if (B > 6 * n || B < n) return [];\n  const base = Math.floor(B / n);\n  const remainder = B % n;\n  const result = [];\n  for (let i = 0; i < n; i++) {\n    result.push(base + (i < remainder ? 1 : 0));\n  }\n  return result;\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/find-missing-observations/",
     "here_url": "find-missing-observations",
     "language": "JavaScript",
     "difficulty": "medium",
-    "solved": "Sep 05, 2024",
-    "notes": "",
-    "code": "var missingRolls = function (rolls, mean, n) {\n  const B =\n    mean * (rolls.length + n) - rolls.reduce((acc, val) => acc + val, 0);\n  if (B > 6 * n || B < n) return [];\n  const base = Math.floor(B / n);\n  const remainder = B % n;\n  const result = [];\n  for (let i = 0; i < n; i++) {\n    result.push(base + (i < remainder ? 1 : 0));\n  }\n  return result;\n};"
+    "notes": ""
   },
   {
     "id": "2798",
     "title": "Delete Nodes from Linked List Present in Array",
     "description": "<p>You are given an array of integers nums and the head of a linked list. Return the head of the modified linked list after removing all nodes from the linked list that have a value that exists in nums.</p>",
-
     "topics": ["Array", "Hash Table", "Linked List"],
-    "runtime": {
-      "time": 338,
-      "beats": 90.04,
-      "complexity": "O(n)"
-    },
-    "memory": {
-      "space": 89.66,
-      "beats": 90.18,
-      "complexity": "O(n)"
-    },
+    "attempts": [
+      {
+        "date": "Sep 06, 2024",
+        "runtime": {
+          "time": 338,
+          "beats": 90.04,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 89.66,
+          "beats": 90.18,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * Definition for singly-linked list.\n * function ListNode(val, next) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.next = (next===undefined ? null : next)\n * }\n */\n\n/**\n * @param {number[]} nums\n * @param {ListNode} head\n * @return {ListNode}\n */\nvar modifiedList = function (nums, head) {\n  const uniqueNums = new Set(nums);\n  let dummy = new ListNode(0);\n  dummy.next = head;\n  let current = dummy;\n  while (current.next !== null) {\n    if (uniqueNums.has(current.next.val)) {\n      current.next = current.next.next;\n    } else {\n      current = current.next;\n    }\n  }\n  return dummy.next;\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/delete-nodes-from-linked-list-present-in-array/",
     "here_url": "delete-nodes-from-linked-list-present-in-array",
     "language": "JavaScript",
     "difficulty": "medium",
-    "solved": "Sep 06, 2024",
-    "notes": "",
-    "code": "/**\n * Definition for singly-linked list.\n * function ListNode(val, next) {\n *     this.val = (val===undefined ? 0 : val)\n *     this.next = (next===undefined ? null : next)\n * }\n */\n\n/**\n * @param {number[]} nums\n * @param {ListNode} head\n * @return {ListNode}\n */\nvar modifiedList = function (nums, head) {\n  const uniqueNums = new Set(nums);\n  let dummy = new ListNode(0);\n  dummy.next = head;\n  let current = dummy;\n  while (current.next !== null) {\n    if (uniqueNums.has(current.next.val)) {\n      current.next = current.next.next;\n    } else {\n      current = current.next;\n    }\n  }\n  return dummy.next;\n};"
+    "notes": ""
   },
   {
     "id": "1367",
@@ -273,46 +253,54 @@
       "Binary Tree",
       "Depth-First Search"
     ],
-    "runtime": {
-      "time": 75,
-      "beats": 31.94,
-      "complexity": "O(n * m)"
-    },
-    "memory": {
-      "space": 56.83,
-      "beats": 10.65,
-      "complexity": "O(n)"
-    },
+    "attempts": [
+      {
+        "date": "Sep 07, 2024",
+        "runtime": {
+          "time": 75,
+          "beats": 31.94,
+          "complexity": "O(n * m)"
+        },
+        "memory": {
+          "space": 56.83,
+          "beats": 10.65,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * Definition for singly-linked list.\n */\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\n/**\n * Definition for a binary tree node.\n */\nfunction TreeNode(val, left, right) {\n  this.val = val === undefined ? 0 : val;\n  this.left = left === undefined ? null : left;\n  this.right = right === undefined ? null : right;\n}\n\n/**\n * @param {ListNode} head\n * @param {TreeNode} root\n * @return {boolean}\n */\nvar isSubPath = function (head, root) {\n  if (!root) return false;\n  return (\n    dfs(head, root) || isSubPath(head, root.left) || isSubPath(head, root.right)\n  );\n\n  function dfs(node, tree) {\n    if (!node) return true;\n    if (!tree) return false;\n    return (\n      node.val === tree.val &&\n      (dfs(node.next, tree.left) || dfs(node.next, tree.right))\n    );\n  }\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/linked-list-in-binary-tree/",
     "here_url": "linked-list-in-binary-tree/",
     "language": "JavaScript",
     "difficulty": "medium",
-    "solved": "Sep 07, 2024",
-    "notes": "",
-    "code": "/**\n * Definition for singly-linked list.\n */\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\n/**\n * Definition for a binary tree node.\n */\nfunction TreeNode(val, left, right) {\n  this.val = val === undefined ? 0 : val;\n  this.left = left === undefined ? null : left;\n  this.right = right === undefined ? null : right;\n}\n\n/**\n * @param {ListNode} head\n * @param {TreeNode} root\n * @return {boolean}\n */\nvar isSubPath = function (head, root) {\n  if (!root) return false;\n  return (\n    dfs(head, root) || isSubPath(head, root.left) || isSubPath(head, root.right)\n  );\n\n  function dfs(node, tree) {\n    if (!node) return true;\n    if (!tree) return false;\n    return (\n      node.val === tree.val &&\n      (dfs(node.next, tree.left) || dfs(node.next, tree.right))\n    );\n  }\n};"
+    "notes": ""
   },
   {
     "id": "725",
     "title": "Split Linked List in Parts",
     "description": "<p>Given the head of a singly linked list and an integer k, split the linked list into k consecutive linked list parts. The length of each part should be as equal as possible: no two parts should have a size differing by more than one.<p></p>This may lead to some parts being null.</p>",
     "topics": ["Linked List"],
-    "runtime": {
-      "time": 62,
-      "beats": 77.17,
-      "complexity": "O(n)"
-    },
-    "memory": {
-      "space": 52.85,
-      "beats": 44.09,
-      "complexity": "O(k)"
-    },
+    "attempts": [
+      {
+        "date": "Sep 08, 2024",
+        "runtime": {
+          "time": 62,
+          "beats": 77.17,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 52.85,
+          "beats": 44.09,
+          "complexity": "O(k)"
+        },
+        "code": "/**\n * @param {ListNode} head\n * @param {number} k\n * @return {ListNode[]}\n */\n//  Definition for singly-linked list.\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\nconst splitListToParts = function (head, k) {\n  let l = 0;\n  let node = head;\n  while (node) {\n    l++;\n    node = node.next;\n  }\n  const avarageLength = l / k;\n  const numOfPartsLonger = l % k;\n  const parts = [];\n  for (let i = 0; i < k; i++) {\n    let part = new ListNode();\n    let partHead = part;\n    for (let j = 0; j <= avarageLength + (i < numOfPartsLonger ? 0 : -1); j++) {\n      part.next = new ListNode(head.val);\n      part = part.next;\n      head = head.next;\n    }\n    parts.push(partHead.next);\n  }\n  return parts;\n};"
+      }
+    ],
     "leetcode_url": "https://leetcode.com/problems/split-linked-list-in-parts/",
     "here_url": "split-linked-list-in-parts/",
     "language": "JavaScript",
     "difficulty": "medium",
-    "solved": "Sep 08, 2024",
-    "notes": "",
-    "code": "/**\n * @param {ListNode} head\n * @param {number} k\n * @return {ListNode[]}\n */\n//  Definition for singly-linked list.\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\n\nconst splitListToParts = function (head, k) {\n  let l = 0;\n  let node = head;\n  while (node) {\n    l++;\n    node = node.next;\n  }\n  const avarageLength = l / k;\n  const numOfPartsLonger = l % k;\n  const parts = [];\n  for (let i = 0; i < k; i++) {\n    let part = new ListNode();\n    let partHead = part;\n    for (let j = 0; j <= avarageLength + (i < numOfPartsLonger ? 0 : -1); j++) {\n      part.next = new ListNode(head.val);\n      part = part.next;\n      head = head.next;\n    }\n    parts.push(partHead.next);\n  }\n  return parts;\n};"
+    "notes": ""
   },
   {
     "id": "2786",
@@ -378,6 +366,761 @@
     ],
     "leetcode_url": "https://leetcode.com/problems/insert-greatest-common-divisors-in-linked-list/",
     "here_url": "insert-greatest-common-divisors-in-linked-list",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "minimum-bit-flips-to-convert-number",
+    "title": "Minimum Bit Flips to Convert Number",
+    "description": "<p>Given two integers <code>start</code> and <code>goal</code>, you are tasked with converting <code>start</code> to <code>goal</code> by flipping some bits (changing a 0 to 1 or a 1 to 0).</p><p>Find the minimum number of bit flips required to convert <code>start</code> into <code>goal</code>.</p><p>Return the minimum number of bit flips required.</p>",
+    "topics": ["Bit Manipulation"],
+    "attempts": [
+      {
+        "date": "Sep 10, 2024",
+        "runtime": {
+          "time": 53,
+          "beats": 57.25,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 48.89,
+          "beats": 63.77,
+          "complexity": "O(1)"
+        },
+        "code": "/**\n * @param {number} start\n * @param {number} goal\n * @return {number}\n */\n\nvar minBitFlips = function (start, goal) {\n  let s = start.toString(2);\n  let g = goal.toString(2);\n  let S = s.length;\n  let G = g.length;\n  if (S < G) s = '0'.repeat(G - S) + s;\n  else g = '0'.repeat(S - G) + g;\n\n  let M = Math.max(S, G);\n  let flips = 0;\n\n  for (let i = M - 1; i >= 0; i--) {\n    if (s[i] !== g[i]) {\n      flips++;\n    }\n  }\n  return flips;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/minimum-bit-flips-to-convert-number/",
+    "here_url": "minimum-bit-flips-to-convert-number",
+    "language": "JavaScript",
+    "difficulty": "easy",
+    "notes": ""
+  },
+  {
+    "id": "count-the-number-of-consistent-strings",
+    "title": "Count the Number of Consistent Strings",
+    "description": "<p>You are given a string <code>allowed</code> consisting of distinct characters and an array of strings <code>words</code>.</p><p>A string is consistent if all characters in the string appear in the string <code>allowed</code>.</p><p>Return the number of consistent strings in the array <code>words</code>.</p>",
+    "topics": ["Array", "Hash Table", "String", "Bit Manipulation", "Counting"],
+    "attempts": [
+      {
+        "date": "Sep 12, 2024",
+        "runtime": {
+          "time": 72,
+          "beats": 94.77,
+          "complexity": "O(n * m)"
+        },
+        "memory": {
+          "space": 57.75,
+          "beats": 92.29,
+          "complexity": "O(1)"
+        },
+        "code": "/**\n * @param {string} allowed\n * @param {string[]} words\n * @return {number}\n */\nconst countConsistentStrings = function (allowed, words) {\n  let count = words.length;\n\n  for (let i = 0; i < words.length; i++) {\n    for (let j = 0; j < words[i].length; j++) {\n      if (!allowed.includes(words[i][j])) {\n        count--;\n        break;\n      }\n    }\n  }\n  return count;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/count-the-number-of-consistent-strings/",
+    "here_url": "count-the-number-of-consistent-strings",
+    "language": "JavaScript",
+    "difficulty": "easy",
+    "notes": "<p class='learnt'>I learnt than «for (let i = 0, i < words.length; i++)» is much faster than «for (let word of words)»</p>\n <p class='idea'>Put count = words.lenght an decrement made code shorter and more beautiful.</p>"
+  },
+  {
+    "id": "merge-k-sorted-lists",
+    "title": "Merge k Sorted Lists",
+    "description": "<p>You are given an array of <code>k</code> linked-lists <code>lists</code>, each linked-list is sorted in ascending order.</p><p>Merge all the linked-lists into one sorted linked-list and return it.</p>",
+    "topics": [
+      "Linked List",
+      "Divide and Conquer",
+      "Heap (Priority Queue)",
+      "Merge Sort"
+    ],
+    "attempts": [
+      {
+        "date": "Sep 13, 2024",
+        "runtime": {
+          "time": 70,
+          "beats": 96.7,
+          "complexity": "O(n * k)"
+        },
+        "memory": {
+          "space": 54.81,
+          "beats": 84.84,
+          "complexity": "O(1)"
+        },
+        "code": "/**\n * @param {ListNode[]} lists\n * @return {ListNode}\n */\n// Definition for singly-linked list.\nfunction ListNode(val, next) {\n  this.val = val === undefined ? 0 : val;\n  this.next = next === undefined ? null : next;\n}\nfunction mergeKLists(lists) {\n  if (!lists || lists.length === 0) return null;\n\n  let dummy = new ListNode(0);\n  let current = dummy;\n\n  // Initialize an array to keep track of current nodes in each list\n  let pointers = lists.slice();\n\n  // Loop until all pointers have no nodes remaining\n  let stillSomething = true;\n  while (stillSomething) {\n    stillSomething = false;\n    let minVal = Infinity;\n\n    // Find the minimum value among the current nodes of all lists\n    for (let i = 0; i < pointers.length; i++) {\n      if (pointers[i] !== null) {\n        stillSomething = true; // At least one list still has elements\n        if (pointers[i].val < minVal) {\n          minVal = pointers[i].val; // Directly compare to find the minimum value\n        }\n      }\n    }\n\n    if (!stillSomething) break;\n\n    // Add nodes with the minimum value to the result list and advance in those lists\n    for (let i = 0; i < pointers.length; i++) {\n      if (pointers[i] !== null && pointers[i].val === minVal) {\n        current.next = new ListNode(minVal);\n        current = current.next;\n        pointers[i] = pointers[i].next; // Advance to the next node in this list\n      }\n    }\n  }\n\n  return dummy.next; // Return the merged list, skipping the dummy head\n}"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/merge-k-sorted-lists/submissions/1388634026/",
+    "here_url": "merge-k-sorted-lists",
+    "language": "JavaScript",
+    "difficulty": "hard",
+    "notes": "I traverse every list only once. When I find a node with the minimum value, I add all the nodes in that list with this value"
+  },
+  {
+    "id": "xor-queries-of-a-subarray",
+    "title": "XOR Queries of a Subarray",
+    "description": "<p>You are given an array <code>arr</code> of positive integers. You are also given the array <code>queries</code> where <code>queries[i] = [lefti, righti]</code>.</p><p>For each query <code>i</code> compute the XOR of elements from <code>lefti</code> to <code>righti</code> (that is, <code>arr[lefti] XOR arr[lefti + 1] XOR ... XOR arr[righti]</code>).</p><p>Return an array <code>answer</code> where <code>answer[i]</code> is the answer to the <code>i<sup>th</sup></code> query.</p>",
+    "topics": ["Array", "Bit Manipulation", "Prefix Sum"],
+    "attempts": [
+      {
+        "date": "Sep 13, 2024",
+        "runtime": {
+          "time": 92,
+          "beats": 50.0,
+          "complexity": "O(n + q)"
+        },
+        "memory": {
+          "space": 64.29,
+          "beats": 37.5,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * @param {number[]} arr\n * @param {number[][]} queries\n * @return {number[]}\n */\nvar xorQueries = function(arr, queries) {\n  const prefixXor = [0];\n  for (let i = 0; i < arr.length; i++) {\n    prefixXor[i + 1] = prefixXor[i] ^ arr[i];\n  }\n  return queries.map(([left, right]) => prefixXor[right + 1] ^ prefixXor[left]);\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/xor-queries-of-a-subarray/submissions/1388987400/",
+    "here_url": "xor-queries-of-a-subarray",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "longest-subarray-with-maximum-bitwise-and",
+    "title": "Longest Subarray With Maximum Bitwise AND",
+    "description": "<p>You are given an integer array <code>nums</code> of size <code>n</code>.</p><p>Consider a non-empty subarray from <code>nums</code> that has the maximum possible bitwise AND.</p><p>In other words, let <code>k</code> be the maximum value of the bitwise AND of any subarray of <code>nums</code>. Then, only subarrays with a bitwise AND equal to <code>k</code> should be considered.</p><p>Return the length of the longest such subarray.</p><p>The bitwise AND of an array is the bitwise AND of all the numbers in it.</p><p>A subarray is a contiguous sequence of elements within an array.</p>",
+    "topics": ["Array", "Bit Manipulation", "Brainteaser"],
+    "attempts": [
+      {
+        "date": "Sep 10, 2024",
+        "runtime": {
+          "time": 65,
+          "beats": 100.0,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 60.26,
+          "beats": 75.76,
+          "complexity": "O(1)"
+        },
+        "code": "var longestSubarray = function (nums) {\n  let max = 1;\n  let count = 0;\n  let maxCount = 0;\n\n  for (let pointer = 0; pointer < nums.length; pointer++) {\n    if (nums[pointer] > max) {\n      max = nums[pointer];\n      count = 1;\n      maxCount = 1;\n    } else if (nums[pointer] === max) {\n      count++;\n      if (count > maxCount) maxCount = count;\n    } else count = 0;\n  }\n  return maxCount;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/longest-subarray-with-maximum-bitwise-and/submissions/1389586929/?envType=daily-question&envId=2024-09-14",
+    "here_url": "longest-subarray-with-maximum-bitwise-and",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": "<p>The main idea is as follows: <br/> \n  For any integers m ≠ n, the expression n & m is less than both n and m. <br/> \n For any integer m, the expression m & m equals m.</p>"
+  },
+  {
+    "id": "find-the-longest-substring-containing-vowels-in-even-counts",
+    "title": "Find the Longest Substring Containing Vowels in Even Counts",
+    "description": "<p>Given a string <code>s</code>, return the length of the longest substring that contains vowels in even counts.</p>",
+    "topics": ["String", "Bit Manipulation", "Hash Table", "Prefix Sum"],
+    "attempts": [
+      {
+        "date": "Sep 15, 2024",
+        "runtime": {
+          "time": 88,
+          "beats": 80.42,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 44.18,
+          "beats": 73.68,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * @param {string} s\n * @return {number}\n */\nconst findTheLongestSubstring = function(s) {\n  let max = 0; \n  let currentXor = 0; \n  const hashMap = new Map(); \n  hashMap.set(0, -1);\n\n  for (let i = 0; i < s.length; i++) {\n      const c = s[i];\n\n      if ('aeiou'.includes(c)) currentXor ^= (1 << 'aeiou'.indexOf(c));\n      \n      if (hashMap.has(currentXor)) max = Math.max(max, i - hashMap.get(currentXor));\n      else hashMap.set(currentXor, i);\n  }\n  return max; \n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/find-the-longest-substring-containing-vowels-in-even-counts/",
+    "here_url": "find-the-longest-substring-containing-vowels-in-even-counts",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": "<p>The map stores the first occurrence of each state.</p> <p>A state is represented by the result of the XOR operation applied to a substring, where each vowel is converted to its corresponding bit representation: '00001' for 'a', '00010' for 'e', etc.</p>"
+  },
+  {
+    "id": "minimum-time-difference",
+    "title": "Minimum Time Difference",
+    "description": "<p>Given a list of 24-hour clock time points in \"HH:MM\" format, return the minimum minutes difference between any two time points in the list.</p>",
+    "topics": ["Array", "Math", "String", "Sorting"],
+    "attempts": [
+      {
+        "date": "Sep 16, 2024",
+        "runtime": {
+          "time": 58,
+          "beats": 94.9,
+          "complexity": "O(n log n)"
+        },
+        "memory": {
+          "space": 51.62,
+          "beats": 95.92,
+          "complexity": "O(n)"
+        },
+        "code": "function findMinDifference(timePoints) {\n  let minutes = [];\n\n  for (const time of timePoints) {\n    const [hour, minute] = time.split(\":\");\n    const totalMinutes = parseInt(hour) * 60 + parseInt(minute);\n    if (minutes.includes(totalMinutes)) return 0;\n    else minutes.push(totalMinutes);\n  }\n\n  minutes.sort((a, b) => a - b);\n  minutes.push(minutes[0] + 1440);\n\n  let minDifference = 1440;\n  for (let i = 0; i < minutes.length - 1; i++) {\n    const diff = minutes[i + 1] - minutes[i];\n    if (diff < minDifference) {\n      minDifference = diff;\n    }\n  }\n\n  return minDifference;\n}"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/minimum-time-difference/submissions/1391924562/?envType=daily-question&envId=2024-09-16",
+    "here_url": "minimum-time-difference",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": "<p>The key optimization is to terminate the process early when a duplicate time point is encountered.</p>"
+  },
+  {
+    "id": "uncommon-words-from-two-sentences",
+    "title": "Uncommon Words from Two Sentences",
+    "description": "<p>A sentence is a string of single-space separated words where each word consists only of lowercase letters.</p><p>A word is uncommon if it appears exactly once in one of the sentences and does not appear in the other sentence.</p><p>Given two sentences <code>s1</code> and <code>s2</code>, return a list of all the uncommon words. You may return the answer in any order.</p><p><strong>Example 1:</strong></p><pre>Input: s1 = \"this apple is sweet\", s2 = \"this apple is sour\"\nOutput: [\"sweet\",\"sour\"]\nExplanation:\nThe word \"sweet\" appears only in s1, while the word \"sour\" appears only in s2.</pre><p><strong>Example 2:</strong></p><pre>Input: s1 = \"apple apple\", s2 = \"banana\"\nOutput: [\"banana\"]</pre>",
+    "topics": ["Hash Table", "String", "Counting"],
+    "attempts": [
+      {
+        "date": "Sep 17, 2024",
+        "runtime": {
+          "time": 36,
+          "beats": 100.0,
+          "complexity": "O(n + m)"
+        },
+        "memory": {
+          "space": 50.96,
+          "beats": 15.16,
+          "complexity": "O(n + m)"
+        },
+        "code": "/**\n * @param {string} s1\n * @param {string} s2\n * @return {string[]}\n */\nvar uncommonFromSentences = function (s1, s2) {\n  const result = [];\n  const map = {};\n  for (word of s1.concat(\" \").concat(s2).split(\" \")) {\n    map[word] = (map[word] || 0) + 1;\n  }\n  for (let word in map) {\n    if (map[word] === 1) result.push(word);\n  }\n  return result;\n};"
+      },
+      {
+        "date": "Sep 17, 2024",
+        "runtime": {
+          "time": 51,
+          "beats": 72.54,
+          "complexity": "O(n + m)"
+        },
+        "memory": {
+          "space": 49.08,
+          "beats": 80.33,
+          "complexity": "O(n + m)"
+        },
+        "code": "var uncommonFromSentences = function (s1, s2) {\n  const map = {};\n  const result = [];\n\n  const addWordsToMap = (sentence) => {\n    let word = \"\";\n    for (let char of sentence) {\n      if (char === \" \") {\n        if (word) {\n          map[word] = (map[word] || 0) + 1;\n          word = \"\";\n        }\n      } else word += char;\n    }\n    if (word) map[word] = (map[word] || 0) + 1;\n  };\n\n  addWordsToMap(s1);\n  addWordsToMap(s2);\n\n  for (let word in map) if (map[word] === 1) result.push(word);\n  return result;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/uncommon-words-from-two-sentences/",
+    "here_url": "uncommon-words-from-two-sentences",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": "<p>I have learned that runtime and memory usage can vary significantly for the same piece of code. I prefer the first attempt to be better in terms of performance.</p>"
+  },
+  {
+    "id": "largest-number",
+    "title": "Largest Number",
+    "description": "<p>Given a list of non-negative integers <code>nums</code>, arrange them such that they form the largest number and return it.</p><p>Since the result may be very large, you need to return a string instead of an integer.</p><p><strong>Example 1:</strong></p><pre>Input: nums = [10,2]\nOutput: \"210\"</pre><p><strong>Example 2:</strong></p><pre>Input: nums = [3,30,34,5,9]\nOutput: \"9534330\"</pre>",
+    "topics": ["Array", "String", "Greedy", "Sorting"],
+    "attempts": [
+      {
+        "date": "Sep 18, 2024",
+        "runtime": {
+          "time": 46,
+          "beats": 95.14,
+          "complexity": "O(n log n)"
+        },
+        "memory": {
+          "space": 50.35,
+          "beats": 91.55,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * @param {number[]} nums\n * @return {string}\n */\nvar largestNumber = function (nums) {\n  let result = nums\n    .map((n) => n.toString())\n    .sort((a, b) => (a + b < b + a ? 1 : -1));\n\n  return result.join(\"\").replace(/^0+/, \"\") || \"0\";\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/largest-number/?envType=daily-question&envId=2024-09-18",
+    "here_url": "largest-number",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": "<p>The key part of the solution is the custom sorting function <code>(a, b) => (a + b < b + a ? 1 : -1)</code>, which ensures the correct arrangement of the numbers to form the largest possible number.</p>"
+  },
+  {
+    "id": "different-ways-to-add-parentheses",
+    "title": "Different Ways to Add Parentheses",
+    "description": "<p>Given a string <code>expression</code> of numbers and operators, return all possible results from computing all the different possible ways to group numbers and operators. You may return the answer in any order.</p><p>The test cases are generated such that the output values fit in a 32-bit integer and the number of different results does not exceed 10<sup>4</sup>.</p><p><strong>Example 1:</strong></p><pre>Input: expression = \"2-1-1\"\nOutput: [0,2]\nExplanation:\n((2-1)-1) = 0 \n(2-(1-1)) = 2</pre><p><strong>Example 2:</strong></p><pre>Input: expression = \"2*3-4*5\"\nOutput: [-34,-14,-10,-10,10]\nExplanation:\n(2*(3-(4*5))) = -34 \n((2*3)-(4*5)) = -14 \n((2*(3-4))*5) = -10 \n(2*((3-4)*5)) = -10 \n(((2*3)-4)*5) = 10</pre>",
+    "topics": [
+      "Math",
+      "String",
+      "Dynamic Programming",
+      "Recursion",
+      "Memoization"
+    ],
+    "attempts": [
+      {
+        "date": "Sep 18, 2024",
+        "runtime": {
+          "time": 61,
+          "beats": 31.52,
+          "complexity": "O(3^n)"
+        },
+        "memory": {
+          "space": 51.92,
+          "beats": 24.24,
+          "complexity": "O(3^n)"
+        },
+        "code": "/**\n * @param {string} expression\n * @return {number[]}\n */\nvar diffWaysToCompute = function (expression) {\n  let result = [];\n  for (let i = 0; i < expression.length; i++) {\n    let c = expression[i];\n    if (c === \"+\" || c === \"-\" || c === \"*\") {\n      let left = diffWaysToCompute(expression.substring(0, i));\n      let right = diffWaysToCompute(expression.substring(i + 1));\n      for (let l of left) {\n        for (let r of right) {\n          if (c === \"+\") result.push(l + r);\n          else if (c === \"-\") result.push(l - r);\n          else if (c === \"*\") result.push(l * r);\n        }\n      }\n    }\n  }\n\n  if (result.length === 0) result.push(parseInt(expression));\n  return result;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/different-ways-to-add-parentheses/",
+    "here_url": "different-ways-to-add-parentheses",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "shortest-palindrome",
+    "title": "Shortest Palindrome",
+    "description": "<p>You are given a string <code>s</code>. You can convert <code>s</code> to a palindrome by adding characters in front of it.</p><p>Return the shortest palindrome you can find by performing this transformation.</p><p><strong>Example 1:</strong></p><pre>Input: s = \"aacecaaa\"\nOutput: \"aaacecaaa\"</pre><p><strong>Example 2:</strong></p><pre>Input: s = \"abcd\"\nOutput: \"dcbabcd\"</pre>",
+    "topics": ["String", "Rolling Hash", "String Matching", "Hash Function"],
+    "attempts": [
+      {
+        "date": "Sep 20, 2024",
+        "runtime": {
+          "time": 76,
+          "beats": 29.13,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 56.14,
+          "beats": 23.3,
+          "complexity": "O(n)"
+        },
+        "code": "var shortestPalindrome = function (s) {\n  const rev_s = s.split(\"\").reverse().join(\"\");\n  const l = s.length;\n  const new_s = s + \"#\" + rev_s;\n\n  const table = new Array(new_s.length).fill(0);\n\n  for (let i = 1; i < new_s.length; i++) {\n    let j = table[i - 1];\n    while (j > 0 && new_s[i] !== new_s[j]) {\n      j = table[j - 1];\n    }\n    if (new_s[i] === new_s[j]) {\n      table[i] = j + 1;\n    }\n  }\n\n  return rev_s.slice(0, l - table[new_s.length - 1]) + s;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/shortest-palindrome/?envType=daily-question&envId=2024-09-20",
+    "here_url": "shortest-palindrome",
+    "language": "JavaScript",
+    "difficulty": "hard",
+    "notes": "Algorithm KMT."
+  },
+  {
+    "id": "lexical-order",
+    "title": "Lexicographical Numbers",
+    "description": "<p>Given an integer <code>n</code>, return all the numbers in the range [1, n] sorted in lexicographical order.</p><p>You must write an algorithm that runs in <code>O(n)</code> time and uses <code>O(1)</code> extra space.</p>",
+    "topics": ["Depth-First Search", "Trie"],
+    "attempts": [
+      {
+        "date": "Sep 20, 2024",
+        "runtime": {
+          "time": 80,
+          "beats": 50.0,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 56.65,
+          "beats": 66.96,
+          "complexity": "O(1)"
+        },
+        "code": "/**\n * @param {number} n\n * @return {number[]}\n */\nvar lexicalOrder = function (n) {\n  const result = [];\n\n  const dfs = (current) => {\n    if (current > n) return;\n    result.push(current);\n    for (let i = 0; i <= 9; i++) {\n      const next = current * 10 + i;\n      if (next > n) break;\n      dfs(next);\n    }\n  };\n\n  for (let i = 1; i <= 9; i++) {\n    dfs(i);\n  }\n  return result;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/lexicographical-numbers/",
+    "here_url": "lexical-order",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "extra-characters-in-a-string",
+    "title": "Extra Characters in a String",
+    "description": "<p>You are given a 0-indexed string <code>s</code> and a dictionary of words <code>dictionary</code>. You have to break <code>s</code> into one or more non-overlapping substrings such that each substring is present in <code>dictionary</code>. There may be some extra characters in <code>s</code> which are not present in any of the substrings.</p><p>Return the minimum number of extra characters left over if you break up <code>s</code> optimally.</p><p><strong>Example 1:</strong></p><pre>Input: s = \"leetscode\", dictionary = [\"leet\",\"code\",\"leetcode\"]\nOutput: 1\nExplanation: We can break s in two substrings: \"leet\" from index 0 to 3 and \"code\" from index 5 to 8. There is only 1 unused character (at index 4), so we return 1.</pre><p><strong>Example 2:</strong></p><pre>Input: s = \"sayhelloworld\", dictionary = [\"hello\",\"world\"]\nOutput: 3\nExplanation: We can break s in two substrings: \"hello\" from index 3 to 7 and \"world\" from index 8 to 12. The characters at indices 0, 1, 2 are not used in any substring and thus are considered as extra characters. Hence, we return 3.</pre>",
+    "topics": ["Array", "Hash Table", "String", "Dynamic Programming", "Trie"],
+    "attempts": [
+      {
+        "date": "Sep 23, 2024",
+        "runtime": {
+          "time": 118,
+          "beats": 93.88,
+          "complexity": "O(n * m)"
+        },
+        "memory": {
+          "space": 55.56,
+          "beats": 100.0,
+          "complexity": "O(n)"
+        },
+        "code": "var minExtraChar = function(s, dictionary) {\n  const n = s.length;\n  const dp = Array(n + 1).fill(0);\n  const dictSet = new Set(dictionary);\n\n  for (let i = n - 1; i >= 0; --i) {\n    dp[i] = dp[i + 1] + 1;\n    for (let j = i; j < n; ++j) {\n      if (dictSet.has(s.substring(i, j + 1))) {\n        dp[i] = Math.min(dp[i], dp[j + 1]);\n      }\n    }\n  }\n\n  return dp[0];\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/extra-characters-in-a-string/",
+    "here_url": "extra-characters-in-a-string",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "longest-common-prefix",
+    "title": "Longest Common Prefix",
+    "description": "<p>Write a function to find the longest common prefix string amongst an array of strings.</p><p>If there is no common prefix, return an empty string \"\".</p><p><strong>Example 1:</strong></p><pre>Input: strs = [\"flower\",\"flow\",\"flight\"]\nOutput: \"fl\"</pre><p><strong>Example 2:</strong></p><pre>Input: strs = [\"dog\",\"racecar\",\"car\"]\nOutput: \"\"\nExplanation: There is no common prefix among the input strings.</pre>",
+    "topics": ["String", "Trie"],
+    "attempts": [
+      {
+        "date": "Sep 23, 2024",
+        "runtime": {
+          "time": 54,
+          "beats": 63.4,
+          "complexity": "O(n * m)"
+        },
+        "memory": {
+          "space": 49.78,
+          "beats": 44.34,
+          "complexity": "O(n)"
+        },
+        "code": "var longestCommonPrefix = function (strs) {\n  let prefix = \"\";\n  let char = \"\";\n\n  const word = strs[0];\n  if (strs.length === 1) return word;\n  for (let index = 0; index < word.length; index++) {\n    char = word[index];\n    for (let j = 1; j < strs.length; j++)\n      if (strs[j][index] !== char) return prefix;\n    prefix = prefix + char;\n  }\n  return prefix;\n}"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/longest-common-prefix/submissions/1400592540/",
+    "here_url": "longest-common-prefix",
+    "language": "JavaScript",
+    "difficulty": "easy",
+    "notes": ""
+  },
+  {
+    "id": "sum-of-prefix-scores-of-strings",
+    "title": "Sum of Prefix Scores of Strings",
+    "description": "<p>Given an array of strings <code>words</code>, return an array <code>result</code> where <code>result[i]</code> is the sum of the scores of all prefixes of <code>words[i]</code>.</p><p>A string's score is the number of times that prefix appears in the array.</p>",
+    "topics": ["Array", "String", "Trie", "Counting"],
+    "attempts": [
+      {
+        "date": "Sep 25, 2024",
+        "runtime": {
+          "time": 1087,
+          "beats": 81.52,
+          "complexity": "O(n * m)"
+        },
+        "memory": {
+          "space": 154.94,
+          "beats": 65.31,
+          "complexity": "O(n * m)"
+        },
+        "code": "/**\n * @param {string[]} words\n * @return {number[]}\n */\nclass TrieNode {\n    constructor() {\n        this.children = {};\n        this.prefixScore = 0;\n    }\n}\n\nclass Trie {\n    constructor() {\n        this.root = new TrieNode();\n    }\n\n    insert(word) {\n        let currentNode = this.root;\n        for (let char of word) {\n            if (!(char in currentNode.children)) {\n                currentNode.children[char] = new TrieNode();\n            }\n            currentNode = currentNode.children[char];\n            currentNode.prefixScore += 1;\n        }\n    }\n\n    getPrefixScore(word) {\n        let currentNode = this.root;\n        let score = 0;\n\n        for (let char of word) {\n            currentNode = currentNode.children[char];\n            score += currentNode.prefixScore;\n        }\n\n        return score;\n    }\n}\n\nvar sumPrefixScores = function(words) {\n    const trie = new Trie();\n\n    for (let word of words) {\n        trie.insert(word);\n    }\n\n    const result = [];\n    for (let word of words) {\n        result.push(trie.getPrefixScore(word));\n    }\n\n    return result;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/sum-of-prefix-scores-of-strings/",
+    "here_url": "sum-of-prefix-scores-of-strings",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "my-calendar-i",
+    "title": "My Calendar I",
+    "description": "<p>Implement a class <code>MyCalendar</code> to store calendar events. The class should allow the booking of events as long as no two events overlap.</p><p>A new event can be added if the event's start time does not overlap with any existing event's end time and vice versa.</p><p>For each booking, return <code>true</code> if the event can be added to the calendar successfully, or <code>false</code> if the event overlaps with an existing one.</p><p><strong>Example 1:</strong></p><pre>MyCalendar calendar = new MyCalendar();\ncalendar.book(10, 20); // returns true\ncalendar.book(15, 25); // returns false\ncalendar.book(20, 30); // returns true</pre>",
+    "topics": ["Array", "Design", "Sorting", "Binary Search"],
+    "attempts": [
+      {
+        "date": "Sep 25, 2024",
+        "runtime": {
+          "time": 154,
+          "beats": 49.78,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 59.81,
+          "beats": 28.61,
+          "complexity": "O(n)"
+        },
+        "code": "var MyCalendar = function () {\n  this.calendar = [];\n};\n\nMyCalendar.prototype.book = function (start, end) {\n  for (let i = 0; i < this.calendar.length; i++) {\n    if (start < this.calendar[i][1] && end > this.calendar[i][0]) {\n      return false;\n    }\n  }\n  this.calendar.push([start, end]);\n  return true;\n};\n\n// Usage Example\n// var obj = new MyCalendar();\n// var param_1 = obj.book(start,end);"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/my-calendar-i/",
+    "here_url": "my-calendar-i",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "my-calendar-ii",
+    "title": "My Calendar II",
+    "description": "<p>Implement a class <code>MyCalendarTwo</code> to allow event booking with at most two simultaneous events. If a new event would result in a triple booking, it cannot be added to the calendar.</p><p>For each booking, return <code>true</code> if the event can be added to the calendar successfully without causing any triple booking, or <code>false</code> otherwise.</p><p><strong>Example 1:</strong></p><pre>MyCalendarTwo calendar = new MyCalendarTwo();\ncalendar.book(10, 20); // returns true\ncalendar.book(50, 60); // returns true\ncalendar.book(10, 40); // returns true\ncalendar.book(5, 15);  // returns false\ncalendar.book(5, 10);  // returns true\ncalendar.book(25, 55); // returns true</pre>",
+    "topics": ["Array", "Design", "Sorting", "Binary Search", "Segment Tree"],
+    "attempts": [
+      {
+        "date": "Sep 27, 2024",
+        "runtime": {
+          "time": 173,
+          "beats": 25.69,
+          "complexity": "O(n^2)"
+        },
+        "memory": {
+          "space": 60.18,
+          "beats": 13.21,
+          "complexity": "O(n)"
+        },
+        "code": "class MyCalendarTwo {\n  constructor() {\n    this.calendar = [];\n    this.intersections = [];\n  }\n\n  isCompatible(start, end) {\n    for (let [s, e] of this.intersections) {\n      if (s < end && e > start) {\n        return false; // Hay un triple solapamiento\n      }\n    }\n    return true;\n  }\n\n  book(start, end) {\n    if (!this.isCompatible(start, end)) return false;\n\n    for (let [s, e] of this.calendar) {\n      if (s < end && e > start) {\n        this.intersections.push([Math.max(s, start), Math.min(e, end)]);\n      }\n    }\n\n    this.calendar.push([start, end]);\n    return true;\n  }\n}"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/my-calendar-ii/",
+    "here_url": "my-calendar-ii",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "design-circular-deque",
+    "title": "Design Circular Deque",
+    "description": "<p>Design your implementation of the circular double-ended queue (deque).</p><p>Implement the <code>MyCircularDeque</code> class:</p><ul><li><code>MyCircularDeque(int k)</code> Initializes the deque with a maximum size of <code>k</code>.</li><li><code>boolean insertFront(int value)</code> Adds an item at the front of Deque. Returns <code>true</code> if the operation is successful, or <code>false</code> otherwise.</li><li><code>boolean insertLast(int value)</code> Adds an item at the rear of Deque. Returns <code>true</code> if the operation is successful, or <code>false</code> otherwise.</li><li><code>boolean deleteFront()</code> Deletes an item from the front of Deque. Returns <code>true</code> if the operation is successful, or <code>false</code> otherwise.</li><li><code>boolean deleteLast()</code> Deletes an item from the rear of Deque. Returns <code>true</code> if the operation is successful, or <code>false</code> otherwise.</li><li><code>int getFront()</code> Returns the front item from the deque. Returns <code>-1</code> if the deque is empty.</li><li><code>int getRear()</code> Returns the last item from the deque. Returns <code>-1</code> if the deque is empty.</li><li><code>boolean isEmpty()</code> Returns <code>true</code> if the deque is empty, or <code>false</code> otherwise.</li><li><code>boolean isFull()</code> Returns <code>true</code> if the deque is full, or <code>false</code> otherwise.</li></ul><p><strong>Example:</strong></p><pre>MyCircularDeque circularDeque = new MyCircularDeque(3); // set the size to be 3\ncircularDeque.insertLast(1); // return true\ncircularDeque.insertLast(2); // return true\ncircularDeque.insertFront(3); // return true\ncircularDeque.insertFront(4); // return false, the queue is full\ncircularDeque.getRear(); // return 2\ncircularDeque.isFull(); // return true\ncircularDeque.deleteLast(); // return true\ncircularDeque.insertFront(4); // return true\ncircularDeque.getFront(); // return 4</pre>",
+    "topics": ["Array", "Linked List", "Design", "Queue"],
+    "attempts": [
+      {
+        "date": "Sep 28, 2024",
+        "runtime": {
+          "time": 90,
+          "beats": 87.37,
+          "complexity": "O(1)"
+        },
+        "memory": {
+          "space": 59.28,
+          "beats": 27.62,
+          "complexity": "O(k)"
+        },
+        "code": "/**\n * @param {number} k\n */\nvar MyCircularDeque = function (k) {\n  this.capacity = k + 1;\n  this.queue = new Array(this.capacity);\n  this.front = 0;\n  this.rear = 0;\n};\n\nMyCircularDeque.prototype.insertFront = function (value) {\n  if (this.isFull()) return false;\n  this.front = (this.front - 1 + this.capacity) % this.capacity;\n  this.queue[this.front] = value;\n  return true;\n};\n\nMyCircularDeque.prototype.insertLast = function (value) {\n  if (this.isFull()) return false;\n  this.queue[this.rear] = value;\n  this.rear = (this.rear + 1) % this.capacity;\n  return true;\n};\n\nMyCircularDeque.prototype.deleteFront = function () {\n  if (this.isEmpty()) return false;\n  this.front = (this.front + 1) % this.capacity;\n  return true;\n};\n\nMyCircularDeque.prototype.deleteLast = function () {\n  if (this.isEmpty()) return false;\n  this.rear = (this.rear - 1 + this.capacity) % this.capacity;\n  return true;\n};\n\nMyCircularDeque.prototype.getFront = function () {\n  if (this.isEmpty()) return -1;\n  return this.queue[this.front];\n};\n\nMyCircularDeque.prototype.getRear = function () {\n  if (this.isEmpty()) return -1;\n  return this.queue[(this.rear - 1 + this.capacity) % this.capacity];\n};\n\nMyCircularDeque.prototype.isEmpty = function () {\n  return this.front === this.rear;\n};\n\nMyCircularDeque.prototype.isFull = function () {\n  return (this.rear + 1) % this.capacity === this.front;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/design-circular-deque/",
+    "here_url": "design-circular-deque",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "all-oone-data-structure",
+    "title": "All O'one Data Structure",
+    "description": "<p>Design a data structure to store the strings' count with the following operations:</p><ul><li><code>inc(String key)</code> - Increments the count of the string <code>key</code> by 1. If the key does not exist in the data structure, insert it with count = 1.</li><li><code>dec(String key)</code> - Decrements the count of the string <code>key</code> by 1. If the count becomes 0, remove the key from the data structure.</li><li><code>getMaxKey()</code> - Returns one of the keys with the highest count. If no element exists, return an empty string <code></code>.</li><li><code>getMinKey()</code> - Returns one of the keys with the lowest count. If no element exists, return an empty string <code></code>.</li></ul><p><strong>Example:</strong></p><pre>AllOne allOne = new AllOne();\nallOne.inc(\"hello\"); // Key \"hello\"'s count is 1\nallOne.inc(\"hello\");",
+    "topics": ["Hash Table", "Design", "Linked List", "Doubly-Linked List"],
+    "attempts": [
+      {
+        "date": "Sep 29, 2024",
+        "runtime": {
+          "time": 2085,
+          "beats": 5.4,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 71.21,
+          "beats": 94.59,
+          "complexity": "O(n)"
+        },
+        "code": "var AllOne = function () {\n  this.map = new Map();\n  this.maxString = \"\";\n  this.minString = \"\";\n  this.maxValue = 0;\n  this.minValue = 0;\n};\n\nAllOne.prototype.inc = function (key) {\n  const value = (this.map.get(key) || 0) + 1;\n  this.map.set(key, value);\n\n  if (value > this.maxValue) {\n    this.maxValue = value;\n    this.maxString = key;\n  }\n};\n\nAllOne.prototype.dec = function (key) {\n  const value = this.map.get(key) - 1;\n  if (value > 0) {\n    this.map.set(key, value);\n\n    if (key === this.minString && value > 1) {\n      this.minValue = value;\n      this.minString = key;\n    }\n  } else {\n    this.map.delete(key);\n  }\n\n  if (this.map.size === 0) {\n    this.minValue = 0;\n    this.maxValue = 0;\n    this.minString = \"\";\n    this.maxString = \"\";\n  } else if (key === this.minString && value === 0) {\n    this.getMinKey();\n  }\n};\n\nAllOne.prototype.getMaxKey = function () {\n  let maxKey = \"\";\n  let maxValue = 0;\n  for (const [key, value] of this.map.entries()) {\n    if (value > maxValue) {\n      maxValue = value;\n      maxKey = key;\n    }\n  }\n  this.maxValue = maxValue;\n  this.maxString = maxKey;\n  return maxKey;\n};\n\nAllOne.prototype.getMinKey = function () {\n  let minKey = \"\";\n  let minValue = Infinity;\n  for (const [key, value] of this.map.entries()) {\n    if (value < minValue) {\n      minValue = value;\n      minKey = key;\n    }\n  }\n  this.minValue = minValue;\n  this.minString = minKey;\n  return minKey;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/all-oone-data-structure/description/",
+    "here_url": "all-oone-data-structure",
+    "language": "JavaScript",
+    "difficulty": "hard",
+    "notes": ""
+  },
+  {
+    "id": "design-a-stack-with-increment-operation",
+    "title": "Design a Stack With Increment Operation",
+    "description": "<p>Design a stack that supports increment operations. The stack should provide the following operations:</p><ul><li><code>CustomStack(int maxSize)</code> - Initializes the stack with a maximum size of <code>maxSize</code>.</li><li><code>void push(int x)</code> - Adds <code>x</code> to the top of the stack if the stack hasn't reached the maximum size yet.</li><li><code>int pop()</code> - Removes and returns the top item from the stack. If the stack is empty, return <code>-1</code>.</li><li><code>void increment(int k, int val)</code> - Increment the bottom <code>k</code> elements of the stack by <code>val</code>. If there are fewer than <code>k</code> elements in the stack, increment all the elements in the stack.</li></ul><p><strong>Example:</strong></p><pre>CustomStack customStack = new CustomStack(3); // Stack is Empty []\ncustomStack.push(1); // stack becomes [1]\ncustomStack.push(2); // stack becomes [1, 2]\ncustomStack.pop(); // return 2 --> Return top of the stack 2, stack becomes [1]\ncustomStack.push(2); // stack becomes [1, 2]\ncustomStack.push(3); // stack becomes [1, 2, 3]\ncustomStack.push(4); // stack still [1, 2, 3], Since stack is full\ncustomStack.increment(5, 100); // stack becomes [101, 102, 103]\ncustomStack.increment(2, 100); // stack becomes [201, 202, 103]\ncustomStack.pop(); // return 103 --> Return top of the stack 103, stack becomes [201, 202]\ncustomStack.pop(); // return 202 --> Return top of the stack 202, stack becomes [201]\ncustomStack.pop(); // return 201 --> Return top of the stack 201, stack becomes []\ncustomStack.pop(); // return -1 --> Stack is empty</pre>",
+    "topics": ["Array", "Stack", "Design"],
+    "attempts": [
+      {
+        "date": "Sep 30, 2024",
+        "runtime": {
+          "time": 88,
+          "beats": 92.86,
+          "complexity": "O(k)"
+        },
+        "memory": {
+          "space": 56.44,
+          "beats": 95.24,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * @param {number} maxSize\n */\nclass CustomStack {\n  constructor(maxSize) {\n    this.stack = [];\n    this.maxSize = maxSize;\n  }\n  /**\n   * @param {number} x\n   * @return {void}\n   */\n  push(x) {\n    if (this.stack.length < this.maxSize) this.stack.push(x);\n  }\n  /**\n   * @return {number}\n   */\n  pop() {\n    if (this.stack.length > 0) return this.stack.pop();\n    else return -1;\n  }\n  /**\n   * @param {number} k\n   * @param {number} val\n   * @return {void}\n   */\n  increment(k, val) {\n    for (let i = 0; i < Math.min(k, this.stack.length); i++) {\n      this.stack[i] = this.stack[i] + val;\n    }\n  }\n}"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/design-a-stack-with-increment-operation/description/",
+    "here_url": "design-a-stack-with-increment-operation",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "find-the-length-of-the-longest-common-prefix",
+    "title": "Find the Length of the Longest Common Prefix",
+    "description": "<p>Given two arrays of integers <code>arr1</code> and <code>arr2</code>, return the length of the longest common prefix between the numbers in <code>arr1</code> and <code>arr2</code>.</p><p>Each number is treated as a string, and the common prefix is the longest sequence of digits shared between the two arrays.</p><p><strong>Example:</strong></p><pre>Input: arr1 = [123, 456, 789], arr2 = [1234, 4567, 12345]\nOutput: 3\nExplanation: The longest common prefix is between 123 and 1234, and the length of the prefix is 3.</pre>",
+    "topics": ["Trie", "String", "Array"],
+    "attempts": [
+      {
+        "date": "Sep 30, 2024",
+        "runtime": {
+          "time": 258,
+          "beats": 66.06,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 77.56,
+          "beats": 23.16,
+          "complexity": "O(m)"
+        },
+        "code": "class TrieNode {\n  constructor() {\n    this.children = {};\n    this.isEndOfWord = false;\n  }\n}\n\nclass Trie {\n  constructor() {\n    this.root = new TrieNode();\n    this.maxLength = 0;\n  }\n\n  insert(number) {\n    let node = this.root;\n    const digits = number.toString();\n    this.maxLength = Math.max(this.maxLength, digits.length);\n\n    for (let digit of digits) {\n      if (!node.children[digit]) {\n        node.children[digit] = new TrieNode();\n      }\n      node = node.children[digit];\n    }\n    node.isEndOfWord = true;\n  }\n\n  bestLen(number) {\n    let node = this.root;\n    const digits = number.toString();\n    let prefixLength = 0;\n\n    for (let digit of digits) {\n      if (!node.children[digit]) return prefixLength;\n      node = node.children[digit];\n      prefixLength++;\n    }\n\n    return prefixLength;\n  }\n}\n\nconst longestCommonPrefix = function (arr1, arr2) {\n  let trie = new Trie();\n\n  for (let num of arr1) trie.insert(num);\n\n  let max = 0;\n  for (let num of arr2) {\n    if (num.toString().length > max) {\n      const len = trie.bestLen(num);\n      if (len === this.maxLength) return len;\n      if (len > max) max = len;\n    }\n  }\n  return max;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/find-the-length-of-the-longest-common-prefix/",
+    "here_url": "find-the-length-of-the-longest-common-prefix",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+
+  {
+    "id": "check-if-array-pairs-are-divisible-by-k",
+    "title": "Check If Array Pairs Are Divisible by k",
+    "description": "<p>Given an array of integers <code>arr</code> and an integer <code>k</code>, return <code>true</code> if there are pairs of numbers in the array whose sum is divisible by <code>k</code>. Otherwise, return <code>false</code>.</p><p>Each element in the array should be used exactly once, and you may not reuse the same element in different pairs.</p><p><strong>Example:</strong></p><pre>Input: arr = [1,2,3,4,5,10,6,7,8,9], k = 5\nOutput: true\nExplanation: Pairs are (1,4), (2,3), (5,10), (6,9), (7,8)</pre>",
+    "topics": ["Array", "Hash Table", "Math", "Greedy"],
+    "attempts": [
+      {
+        "date": "Oct 1, 2024",
+        "runtime": {
+          "time": 86,
+          "beats": 94.29,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 66.28,
+          "beats": 48.57,
+          "complexity": "O(k)"
+        },
+        "code": "/**\n * @param {number[]} arr\n * @param {number} k\n * @return {boolean}\n */\nconst canArrange = function (arr, k) {\n  const remainderCounts = new Array(k).fill(0);\n\n  for (let num of arr) {\n    let remainder = num % k;\n    if (remainder < 0) remainder += k;\n    if (remainder <= k / 2) remainderCounts[remainder]++;\n    else remainderCounts[k - remainder]--;\n  }\n\n  if (remainderCounts[0] % 2 !== 0) return false;\n  if (k % 2 === 0 && remainderCounts[k / 2] % 2 !== 0) return false;\n  for (let i = 1; i < k / 2; i++) {\n    if (remainderCounts[i] !== 0) return false;\n  }\n\n  return true;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/check-if-array-pairs-are-divisible-by-k/description/",
+    "here_url": "check-if-array-pairs-are-divisible-by-k",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "rank-transform-of-an-array",
+    "title": "Rank Transform of an Array",
+    "description": "<p>Given an array of integers <code>arr</code>, replace each element with its rank. The rank represents how large the element is compared to other elements, starting from rank 1. The rank of the smallest element is 1, and the rank of the largest element is the number of unique elements.</p><p><strong>Example:</strong></p><pre>Input: arr = [40,10,20,30]\nOutput: [4,1,2,3]\nExplanation: 40 is the largest element and has rank 4. 10 is the smallest element and has rank 1. 20 is the second smallest element and has rank 2. 30 is the third smallest element and has rank 3.</pre>",
+    "topics": ["Array", "Hash Table", "Sorting"],
+    "attempts": [
+      {
+        "date": "Oct 2, 2024",
+        "runtime": {
+          "time": 150,
+          "beats": 75.47,
+          "complexity": "O(n log n)"
+        },
+        "memory": {
+          "space": 71.1,
+          "beats": 85.85,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * @param {number[]} arr\n * @return {number[]}\n */\nvar arrayRankTransform = function (arr) {\n  const l = arr.length;\n  if (l === 0) return [];\n  const brr = [...arr].sort((a, b) => a - b);\n  const map = new Map();\n  map.set(brr[0], 1);\n\n  for (i = 1; i < l; i++) {\n    map.set(brr[i], map.get(brr[i - 1]) + Number(brr[i] > brr[i - 1]));\n  }\n  console.log(map);\n  let rank = [];\n  for (let i = 0; i < l; i++) rank[i] = map.get(arr[i]);\n  return rank;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/rank-transform-of-an-array/",
+    "here_url": "rank-transform-of-an-array",
+    "language": "JavaScript",
+    "difficulty": "easy",
+    "notes": "<p>Using a <code>Map</code> allows for constant time O(1) access to the ranks.</p>"
+  },
+  {
+    "id": "make-sum-divisible-by-p",
+    "title": "Make Sum Divisible by P",
+    "description": "<p>Given an array of integers <code>nums</code> and an integer <code>p</code>, remove the smallest subarray (possibly empty) such that the sum of the remaining elements is divisible by <code>p</code>. It is not allowed to remove all the elements. Return the length of the smallest subarray that you need to remove, or return <code>-1</code> if it's impossible.</p><p><strong>Example:</strong></p><pre>Input: nums = [3,1,4,2], p = 6\nOutput: 1\nExplanation: Removing the subarray [4] leaves the sum of the remaining elements, which is 6, divisible by 6.</pre>",
+    "topics": ["Array", "Hash Table", "Prefix Sum"],
+    "attempts": [
+      {
+        "date": "Oct 3, 2024",
+        "runtime": {
+          "time": 107,
+          "beats": 57.89,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 70.8,
+          "beats": 42.1,
+          "complexity": "O(n)"
+        },
+        "code": "var minSubarray = function (nums, p) {\n  const totalSum = nums.reduce((acc, num) => acc + num, 0);\n  const mod = totalSum % p;\n  if (mod === 0) return 0;\n\n  let prefixSum = 0;\n  let minLength = nums.length;\n  let map = new Map();\n  map.set(0, -1);\n\n  for (let i = 0; i < nums.length; i++) {\n    prefixSum = (prefixSum + nums[i]) % p;\n\n    const targetMod = (prefixSum - mod + p) % p;\n\n    if (map.has(targetMod)) {\n      minLength = Math.min(minLength, i - map.get(targetMod));\n    }\n\n    map.set(prefixSum, i);\n  }\n\n  return minLength === nums.length ? -1 : minLength;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/make-sum-divisible-by-p/",
+    "here_url": "make-sum-divisible-by-p",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "divide-players-into-teams-of-equal-skill",
+    "title": "Divide Players Into Teams of Equal Skill",
+    "description": "<p>You are given an integer array <code>skill</code> where <code>skill[i]</code> represents the skill of the <code>i<sup>th</sup></code> player. You want to divide the players into teams such that the total skill of each team is the same. Additionally, the chemistry of a team is defined as the product of the skills of the two players in the team. Return the sum of all team chemistries, or return <code>-1</code> if it is impossible to divide the players into teams with equal total skill.</p><p><strong>Example:</strong></p><pre>Input: skill = [3,4,3,4]\nOutput: 24\nExplanation: Divide the players into teams of equal skill: [3,4] and [3,4]. The chemistry of each team is 3 * 4 = 12. Thus, the sum of all team chemistries is 12 + 12 = 24.</pre>",
+    "topics": ["Array", "Hash Table", "Two Pointers", "Greedy", "Sorting"],
+    "attempts": [
+      {
+        "date": "Oct 4, 2024",
+        "runtime": {
+          "time": 97,
+          "beats": 80.26,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 58.18,
+          "beats": 93.42,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * @param {number[]} skill\n * @return {number}\n */\nconst dividePlayers = function (skill) {\n  const len = skill.length;\n  const sum = (2 * skill.reduce((a, b) => a + b, 0)) / len;\n\n  if (!Number.isInteger(sum)) return -1;\n\n  const debt = new Map();\n  let totalDebt = 0;\n\n  let chemistrySum = 0;\n  for (i = 0; i < len; i++) {\n    const mainKey = skill[i];\n    const mainValue = debt.get(mainKey);\n    const pair = sum - mainKey;\n\n    if (mainValue !== undefined && mainValue > 0) {\n      debt.set(mainKey, mainValue - 1);\n      totalDebt--;\n      chemistrySum += mainKey * (sum - mainKey);\n      continue;\n    } else {\n      debt.set(pair, (debt.get(pair) || 0) + 1);\n      totalDebt++;\n    }\n    if (totalDebt > len - i - 1) return -1;\n  }\n\n  for (let value of debt.values()) if (value !== 0) return -1;\n\n  return chemistrySum;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/divide-players-into-teams-of-equal-skill",
+    "here_url": "divide-players-into-teams-of-equal-skill",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
+  },
+  {
+    "id": "permutation-in-string",
+    "title": "Permutation in String",
+    "description": "<p>Given two strings <code>s1</code> and <code>s2</code>, return <code>true</code> if <code>s2</code> contains a permutation of <code>s1</code>, or <code>false</code> otherwise.</p><p>In other words, return <code>true</code> if one of <code>s1</code>'s permutations is the substring of <code>s2</code>.</p><p><strong>Example:</strong></p><pre>Input: s1 = \"ab\", s2 = \"eidbaooo\"\nOutput: true\nExplanation: s2 contains one permutation of s1 (\"ba\").</pre>",
+    "topics": ["String", "Sliding Window", "Hash Table", "Two Pointers"],
+    "attempts": [
+      {
+        "date": "Oct 5, 2024",
+        "runtime": {
+          "time": 67,
+          "beats": 78.13,
+          "complexity": "O(n + m)"
+        },
+        "memory": {
+          "space": 52.22,
+          "beats": 75.46,
+          "complexity": "O(1)"
+        },
+        "code": "/**\n * @param {string} s1\n * @param {string} s2\n * @return {boolean}\n */\nvar checkInclusion = function (s1, s2) {\n  const l1 = s1.length,\n    l2 = s2.length;\n  if (l1 > l2) return false;\n\n  let map = new Map();\n\n  let counter = 0;\n  for (const char of s1) {\n    const value = (map.get(char) || 0) + 1;\n    map.set(char, value);\n    if (value === 1) counter++;\n  }\n\n  for (let k = 0; k < l1; k++) {\n    const char = s2[k];\n    if (map.has(char)) {\n      const newValue = map.get(char) - 1;\n      map.set(char, newValue);\n\n      if (newValue === 0) counter--;\n      else if (newValue === -1) counter++;\n    }\n  }\n\n  if (counter === 0) return true;\n\n  for (let i = 1; i < l2 - l1 + 1; i++) {\n    const prevChar = s2[i - 1];\n    const newChar = s2[i + l1 - 1];\n\n    if (map.has(prevChar)) {\n      const newValue = map.get(prevChar) + 1;\n      map.set(prevChar, newValue);\n      if (newValue === 1) counter++;\n      else if (newValue === 0) counter--;\n    }\n\n    if (map.has(newChar)) {\n      const newValue = map.get(newChar) - 1;\n      map.set(newChar, newValue);\n      if (newValue === 0) counter--;\n      else if (newValue === -1) counter++;\n    }\n\n    if (counter === 0) return true;\n  }\n\n  return false;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/permutation-in-string/",
+    "here_url": "permutation-in-string",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": "<p>'n' refers to s1.length, and 'm' refers to s2.length.</p>"
+  },
+  {
+    "id": "sentence-similarity-iii",
+    "title": "Sentence Similarity III",
+    "description": "<p>Given two sentences <code>sentence1</code> and <code>sentence2</code>, return <code>true</code> if <code>sentence2</code> can be obtained by inserting words at the start or the end of <code>sentence1</code>, or <code>false</code> otherwise.</p><p><strong>Example:</strong></p><pre>Input: sentence1 = \"My name is Haley\", sentence2 = \"My Haley\"\nOutput: true</pre>",
+    "topics": ["Array", "String", "Two Pointers"],
+    "attempts": [
+      {
+        "date": "Oct 6, 2024",
+        "runtime": {
+          "time": 39,
+          "beats": 92.59,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 49.24,
+          "beats": 14.81,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * @param {string} sentence1\n * @param {string} sentence2\n * @return {boolean}\n */\n\n// v1.2\n// Runtime: 39ms, Beats: 92.59%\n// Memory: 49.24MB, Beats: 49.24%\n\nvar areSentencesSimilar = function (sentence1, sentence2) {\n  if (sentence1 === sentence2 || sentence1 === \"\" || sentence2 === \"\") return true;\n  const arr1 = sentence1.split(\" \");\n  let l1 = arr1.length;\n  const arr2 = sentence2.split(\" \");\n  let l2 = arr2.length;\n  if (l1 === l2) return false;\n\n  let go = true;\n\n  let index = 1;\n  go = true;\n  while (go) {\n    go = false;\n    if (arr1[arr1.length - index] === arr2[arr2.length - index]) {\n      index++;\n      l1--;\n      l2--;\n      if (l1 === 0 || l2 === 0) return true;\n      go = true;\n    }\n  }\n\n  index = 0;\n  go = true;\n  while (go) {\n    go = false;\n    if (arr1[index] === arr2[index]) {\n      index++;\n      l1--;\n      l2--;\n      if (l1 === 0 || l2 === 0) return true;\n      go = true;\n    }\n  }\n\n  return false;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/sentence-similarity-iii/",
+    "here_url": "sentence-similarity-iii",
     "language": "JavaScript",
     "difficulty": "medium",
     "notes": ""

@@ -1,0 +1,82 @@
+@import "sass/abstracts/variables"
+@import "../sass/base/reset"
+@import "sass/components/search-bar"
+@import "sass/components/problems-section"
+@import "sass/components/card"
+@import "sass/components/topics-buttons"
+@import "sass/components/problems-table"
+@import 'sass/vendors/prism.css'
+
+/*************************/
+/***** Styles starts *****/
+/*************************/
+
+body
+    font-family: Arial, sans-serif
+    
+
+header
+    padding: 15px
+    text-align: center
+    width: 100%
+
+h1, h2, h3
+    color: $main-color
+
+footer ul
+    list-style-type: none
+    padding: 0
+    margin: 0
+
+footer li
+    margin-right: 15px
+
+footer a
+    text-decoration: none
+    color: #3a3f58
+
+footer a:hover
+    color: #2a2e48
+
+
+.tooltip
+    position: relative
+    font-family: monospace
+
+.tooltip .tooltiptext
+    visibility: hidden // Oculto por defecto
+    width: 250px
+    background-color: #555
+    color: #fff
+    text-align: center
+    border-radius: 6px
+    padding: 10px
+    position: absolute
+    z-index: 1
+    bottom: 100% // Mostrar el tooltip arriba
+    left: -50%
+    opacity: 0 // Invisibilidad inicial
+    transition: opacity 0.3s // Animación
+
+.tooltip:hover .tooltiptext,
+.tooltip:focus .tooltiptext
+    // Para soportar pantallas táctiles
+    visibility: visible
+    opacity: 1
+
+.tooltip .tooltiptext::after
+    content: ""
+    position: absolute
+    top: 100% // Flecha apuntando hacia abajo
+    left: 50%
+    margin-left: -5px
+    border-width: 5px
+    border-style: solid
+    border-color: #555 transparent transparent transparent
+
+.tooltip:not(.price):not(.shit)::before
+    content: "\2003" 
+    display: inline-block
+    width: 1em 
+    margin-right: .5em 
+

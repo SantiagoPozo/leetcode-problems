@@ -9,31 +9,33 @@
         color: green;
         font-weight: bold;
       }
-
       .failed {
         color: red;
         font-weight: bold;
       }
+      .head {
+        color: blue;
+        font-weight: lighter;
+        font-style: italic;
+        display: inline-block;
+        width: 8em;
+      }
+      p {
+        margin-bottom: 20px;
+      }
     </style>
-
-    <title>Merge k Sorted Lists</title>
+    <title>Testing xorQueries Function</title>
     <script src="script.js"></script>
   </head>
   <body>
-    <h1>Testing mergeKLists</h1>
+    <h1>Testing xorQueries Function</h1>
     <div id="test-results"></div>
-
     <script>
-      // Función para cargar el archivo JSON y realizar las pruebas
       fetch("data.json")
         .then((response) => response.json())
         .then((data) => {
           const resultsDiv = document.getElementById("test-results");
-
-          // Medir el tiempo total de todas las pruebas
           const totalStartTime = performance.now();
-
-          // Filtrar casos de prueba si se ha definido un filtro en el JSON
           const testCasesToRun = data.filter
             ? data.testCases.filter((_, index) =>
                 data.filter.includes(index + 1)
@@ -41,15 +43,11 @@
             : data.testCases;
 
           testCasesToRun.forEach((testCase, index) => {
-            const { lists, expected } = testCase;
-
-            // Convertir arrays a listas enlazadas
-            const listNodes = lists.map(arrayToList);
+            const { arr, queries, expected } = testCase;
 
             // Medir el tiempo de ejecución de cada prueba
             const startTime = performance.now();
-            const resultListNode = mergeKLists(listNodes);
-            const result = listToArray(resultListNode);
+            const result = xorQueries(arr, queries);
             const endTime = performance.now();
             const executionTime = (endTime - startTime).toFixed(2);
 
@@ -64,19 +62,22 @@
             const resultElement = document.createElement("p");
             resultElement.innerHTML = `<span class="${
               testPassed ? "passed" : "failed"
-            }"><b>${testResultText}</b></span> - Expected: ${JSON.stringify(
+            }"><b>${testResultText}</b></span><br /><span class="head">Input:</span> arr: ${JSON.stringify(
+              arr
+            )}, queries: ${JSON.stringify(
+              queries
+            )}<br /><span class="head">Expected:</span> ${JSON.stringify(
               expected
-            )}, Got: ${JSON.stringify(result)}. Time: ${executionTime} ms`;
+            )}<br /><span class="head">Got:</span> ${JSON.stringify(
+              result
+            )}. Time: ${executionTime} ms`;
             resultsDiv.appendChild(resultElement);
           });
 
-          // Medir el tiempo total de ejecución
           const totalEndTime = performance.now();
           const totalExecutionTime = (totalEndTime - totalStartTime).toFixed(2);
-
-          // Mostrar el tiempo total empleado en un h2
           const totalTimeElement = document.createElement("h2");
-          totalTimeElement.textContent = `Total Time: ${totalExecutionTime} ms`;
+          totalTimeElement.textContent = `Total Time for all tests: ${totalExecutionTime} ms`;
           resultsDiv.appendChild(totalTimeElement);
         })
         .catch((error) => console.error("Error loading data.json:", error));

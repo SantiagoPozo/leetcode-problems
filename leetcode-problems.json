@@ -1124,5 +1124,32 @@
     "language": "JavaScript",
     "difficulty": "medium",
     "notes": ""
+  },
+  {
+    "id": "minimum-number-of-swaps-to-make-the-string-balanced",
+    "title": "Minimum Number of Swaps to Make the String Balanced",
+    "description": "<p>You are given a string <code>s</code> of even length consisting of opening and closing brackets <code>'['</code> and <code>']'</code> only.</p><p>A string is called balanced if and only if:</p><ul><li>It is the empty string, or</li><li>It can be written as <code>AB</code>, where both <code>A</code> and <code>B</code> are balanced strings, or</li><li>It can be written as <code>[C]</code>, where <code>C</code> is a balanced string.</li></ul><p>You may swap the brackets at any two indices any number of times.</p><p>Return the minimum number of swaps to make <code>s</code> balanced.</p><p><strong>Example:</strong></p><pre>Input: s = \"]][[[\"\nOutput: 1\nExplanation: You can swap the second ']' with the second '[' to make s balanced.</pre>",
+    "topics": ["String", "Greedy", "Stack", "Two Pointers"],
+    "attempts": [
+      {
+        "date": "Oct 10, 2024",
+        "runtime": {
+          "time": 77,
+          "beats": 85.59,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 59.73,
+          "beats": 72.07,
+          "complexity": "O(1)"
+        },
+        "code": "/**\n * @param {string} s\n * @return {number}\n */\nvar minSwaps = function (s) {\n  if (s === \"\") return 0;\n  let i = 0;\n  let j = s.length - 1;\n  let rightBalance = 0;\n  let leftBalance = 0;\n  let result = 0;\n\n  while (i < j) {\n    if (s[i] === \"[\") rightBalance++;\n    else rightBalance--;\n\n    if (rightBalance < 0) {\n      while (j > i) {\n        if (s[j] === \"[\") leftBalance--;\n        else leftBalance++;\n\n        if (leftBalance < 0) {\n          result++;\n          rightBalance = rightBalance + 2;\n          leftBalance = leftBalance + 2;\n          break;\n        }\n        j--;\n      }\n    }\n    i++;\n  }\n  return result;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced/",
+    "here_url": "minimum-number-of-swaps-to-make-the-string-balanced",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": "So beautiful <3."
   }
 ]

@@ -49,9 +49,13 @@ function createButton(content, classes = []) {
     const currentValue = searchInput.value.toLowerCase();
     const buttonValue = content.toLowerCase();
 
-    searchInput.value = currentValue.includes(buttonValue)
-      ? currentValue.replace(new RegExp(`\\b${buttonValue}\\b`), "").trim()
-      : `${currentValue} ${buttonValue}`.trim();
+    const formattedButtonValue = buttonValue.includes(" ")
+      ? `"${buttonValue}"`
+      : buttonValue;
+
+    searchInput.value = currentValue.includes(formattedButtonValue)
+      ? currentValue.replace(new RegExp(`${formattedButtonValue}`), "").trim()
+      : `${currentValue} ${formattedButtonValue}`.trim();
 
     searchInput.dispatchEvent(
       new Event("input", { bubbles: true, cancelable: true })
@@ -255,6 +259,18 @@ function renderProblems(problems) {
     const problemElement = renderProblem(problem, problems, problemIndex);
     problemsContainer.appendChild(problemElement);
   });
+  if (problems.length === 0) {
+    problemsContainer.innerHTML = `
+      <div class="no-results center"> 
+        <p>No Results found 🙈</p>
+        
+        <button 
+          id="clear-button-2" 
+          onclick="clearSearch()">
+            Clear Search
+        </button>
+      </div>`;
+  }
 }
 
 // Función para limpiar el campo de búsqueda
@@ -276,14 +292,22 @@ async function fetchAndRenderProblems() {
 
   searchInput.addEventListener("input", function () {
     const query = searchInput.value.toLowerCase();
-    if (query.length >= 3) {
-      const filteredProblems = problems.filter(
-        (problem) =>
-          problem.title.toLowerCase().includes(query) ||
-          problem.description.toLowerCase().includes(query) ||
-          problem.topics.some((topic) => topic.toLowerCase().includes(query)) ||
-          problem.difficulty.toLowerCase().includes(query)
-      );
+
+    if (query.length > 0) {
+      const terms = query
+        .match(/"[^"]+"|\S+/g)
+        .map((term) => term.replace(/"/g, ""));
+      const filteredProblems = problems.filter((problem) => {
+        return terms.every(
+          (term) =>
+            problem.title.toLowerCase().includes(term) ||
+            problem.description.toLowerCase().includes(term) ||
+            problem.topics.some((topic) =>
+              topic.toLowerCase().includes(term)
+            ) ||
+            problem.difficulty.toLowerCase().includes(term)
+        );
+      });
       renderProblems(filteredProblems);
     } else {
       renderProblems(problems);

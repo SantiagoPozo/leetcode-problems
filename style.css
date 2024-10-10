@@ -340,6 +340,80 @@ section header > * {
   border-color: darkred;
 }
 
+.no-results {
+  font-size: 1.6rem;
+  min-height: 65vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#clear-button-2 {
+  background: transparent;
+  width: 25vw;
+  height: 15vw;
+  font-size: 1.6rem;
+  border-radius: 1ex;
+  border: 1px solid #616161;
+  color: dark-gray;
+  margin: 0;
+  margin-top: 5ex;
+  padding: 0;
+  transition: transform 0.5s ease;
+}
+#clear-button-2:hover {
+  cursor: pointer;
+}
+
+nav ul {
+  font-size: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+nav ul :not(:first-child) {
+  margin-left: 20px;
+}
+nav ul a {
+  text-decoration: none;
+  color: #424242;
+}
+
+footer {
+  margin-top: 30px;
+  background-color: #424242;
+}
+footer nav ul {
+  padding-top: 30px;
+}
+footer nav ul li a, footer nav ul li svg {
+  color: #9e9e9e;
+  fill: #9e9e9e;
+}
+footer nav ul li a:hover, footer nav ul li svg:hover {
+  color: white;
+  fill: white;
+}
+footer p {
+  text-align: center;
+  color: #9e9e9e;
+  margin: 20px auto 0 auto;
+  padding-bottom: 20px;
+}
+
+.home {
+  height: 2.6ex;
+  width: 2.6ex;
+  transform: translateY(-3px);
+}
+.home #under-header {
+  fill: #424242;
+}
+.home footer {
+  fill: white;
+}
+
 /*************************/
 /***** Styles starts *****/
 /*************************/
@@ -353,27 +427,12 @@ header {
   width: 100%;
 }
 
+main {
+  min-height: 50vh;
+}
+
 h1, h2, h3 {
   color: #2a6496;
-}
-
-footer ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-footer li {
-  margin-right: 15px;
-}
-
-footer a {
-  text-decoration: none;
-  color: #3a3f58;
-}
-
-footer a:hover {
-  color: #2a2e48;
 }
 
 .tooltip {

@@ -5,6 +5,8 @@
 @import "sass/components/card"
 @import "sass/components/topics-buttons"
 @import "sass/components/problems-table"
+@import "sass/components/no-results"
+@import "sass/components/nav"
 @import 'sass/vendors/prism.css'
 
 /*************************/
@@ -13,31 +15,17 @@
 
 body
     font-family: Arial, sans-serif
-    
 
 header
     padding: 15px
     text-align: center
     width: 100%
 
+main
+    min-height: 50vh
+
 h1, h2, h3
     color: $main-color
-
-footer ul
-    list-style-type: none
-    padding: 0
-    margin: 0
-
-footer li
-    margin-right: 15px
-
-footer a
-    text-decoration: none
-    color: #3a3f58
-
-footer a:hover
-    color: #2a2e48
-
 
 .tooltip
     position: relative
@@ -75,8 +63,7 @@ footer a:hover
     border-color: #555 transparent transparent transparent
 
 .tooltip:not(.price):not(.shit)::before
-    content: "\2003" 
+    content: "\2003"
     display: inline-block
-    width: 1em 
-    margin-right: .5em 
-
+    width: 1em
+    margin-right: .5em

@@ -1,0 +1,42 @@
+nav
+  ul
+    font-size: $font-size
+    display: flex
+    flex-wrap: wrap
+    justify-content: center
+    :not(:first-child)
+      margin-left: 20px
+
+    a
+      text-decoration: none
+      color: $darker-gray
+footer
+
+  margin-top: 30px
+  background-color: $darker-gray
+  nav
+    ul
+      padding-top: 30px
+      li
+        a, svg
+          color: $gray
+          fill: $gray
+          &:hover
+            color: white
+            fill: white
+
+  p
+    text-align: center
+    color: $gray
+    margin: 20px auto 0 auto
+
+    padding-bottom: 20px
+
+.home
+  height: 2.6ex
+  width: 2.6ex
+  transform: translateY(-3px)
+  & #under-header
+    fill: $darker-gray
+  & footer
+    fill: white

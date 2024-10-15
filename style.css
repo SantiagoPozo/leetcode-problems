@@ -308,34 +308,40 @@ section header > * {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 1ch;
 }
-.difficulty-and-topics button {
+
+button {
   display: inline;
-  min-width: 6em;
-  margin-left: 5px;
+  box-sizing: border-box;
   background-color: #f2f2f2;
   border: 1px solid;
   font-size: 0.8rem;
   font-weight: lighter;
-  padding: 0.5ch;
+  padding: 0.5ch 0;
   border-radius: 5px;
+  margin-left: 1em;
   margin-top: 5px;
   color: #333;
   cursor: pointer;
 }
-.difficulty-and-topics .topic {
+button:not(.double-size) {
+  min-width: 6em;
+}
+button.double-size {
+  min-width: 13em;
+}
+button.topic {
   border-color: #333;
 }
-.difficulty-and-topics .difficulty.green {
+button.difficulty.green {
   color: green;
   border-color: green;
 }
-.difficulty-and-topics .difficulty.yellow {
+button.difficulty.yellow {
   color: rgb(154, 154, 11);
   border-color: rgb(154, 154, 11);
 }
-.difficulty-and-topics .difficulty.red {
+button.difficulty.red {
   color: darkred;
   border-color: darkred;
 }

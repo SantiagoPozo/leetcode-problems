@@ -1,34 +1,38 @@
 .difficulty-and-topics
-  display: flex
-  flex-direction: row
-  flex-wrap: wrap
-  gap: 1ch
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
 
-  button
-      display: inline
-      min-width: 6em
-      margin-left: 5px
-      background-color: #f2f2f2
-      border: 1px solid
-      font-size: $font-size-small
-      font-weight: lighter
-      padding: 0.5ch
-      border-radius: 5px
-      margin-top: 5px
-      color: #333
-      cursor: pointer
+button
+    display: inline
+    box-sizing: border-box
+    background-color: #f2f2f2
+    border: 1px solid
+    font-size: $font-size-small
+    font-weight: lighter
+    padding: 0.5ch 0
+    border-radius: 5px
+    margin-left: 1em
+    margin-top: 5px
+    color: #333
+    cursor: pointer
 
-  .topic
-      border-color: #333
+    &:not(.double-size)
+        min-width: 6em
+    &.double-size
+        min-width: 13em
 
-  .difficulty.green
-      color: green
-      border-color: green
+    &.topic
+        border-color: #333
 
-  .difficulty.yellow
-      color: $yellow
-      border-color: $yellow
+    &.difficulty.green
+        color: green
+        border-color: green
 
-  .difficulty.red
-      color: darkred
-      border-color: darkred
+    &.difficulty.yellow
+        color: $yellow
+        border-color: $yellow
+
+    &.difficulty.red
+        color: darkred
+        border-color: darkred

@@ -1151,5 +1151,66 @@
     "language": "JavaScript",
     "difficulty": "medium",
     "notes": "So beautiful <3."
+  },
+  {
+    "id": "smallest-range-covering-elements-from-k-lists",
+    "title": "Smallest Range Covering Elements from K Lists",
+    "description": "<p>You have <code>k</code> lists of sorted integers in non-decreasing order. Find the smallest range that includes at least one number from each of the <code>k</code> lists.</p><p>We define the range <code>[a, b]</code> is smaller than range <code>[c, d]</code> if <code>b - a < d - c</code> or <code>a < c</code> if <code>b - a == d - c</code>.</p><p><strong>Example 1:</strong></p><pre>Input: nums = [[4,10,15,24,26],[0,9,12,20],[5,18,22,30]]\nOutput: [20,24]\nExplanation:\nList 1: [4, 10, 15, 24, 26], 24 is in range [20, 24].\nList 2: [0, 9, 12, 20], 20 is in range [20, 24].\nList 3: [5, 18, 22, 30], 22 is in range [20, 24].</pre><p><strong>Example 2:</strong></p><pre>Input: nums = [[1,2,3],[1,2,3],[1,2,3]]\nOutput: [1,1]</pre><p><strong>Constraints:</strong></p><ul><li>nums.length == k</li><li>1 <= k <= 3500</li><li>1 <= nums[i].length <= 50</li><li>-10<sup>5</sup> <= nums[i][j] <= 10<sup>5</sup></li><li>nums[i] is sorted in non-decreasing order.</li></ul>",
+    "topics": [
+      "Array",
+      "Hash Table",
+      "Sliding Window",
+      "Heap (Priority Queue)",
+      "Greedy",
+      "Sorting"
+    ],
+    "attempts": [
+      {
+        "date": "Oct 13, 2024",
+        "runtime": {
+          "time": 101,
+          "beats": 86.57,
+          "complexity": "O(n log n)"
+        },
+        "memory": {
+          "space": 57.72,
+          "beats": 97.01,
+          "complexity": "O(n)"
+        },
+        "code": "/**\n * @param {number[][]} nums\n * @return {number[]}\n */\nvar smallestRange = function(nums) {\n  const len = nums.length;\n  let listsPointer = new Map();\n  let complexRange = [];\n\n  function insertIntoSortedArray(pair) {\n    let left = 0;\n    let right = complexRange.length;\n    let num = pair[0];\n\n    while (left < right) {\n      const mid = Math.floor((left + right) / 2);\n      if (complexRange[mid][0] < num) {\n        left = mid + 1;\n      } else {\n        right = mid;\n      }\n    }\n    complexRange.splice(left, 0, pair);\n  }\n\n  for (let i = 0; i < len; i++) {\n    insertIntoSortedArray([nums[i][0], i]);\n    if (nums[i].length === 1) listsPointer.set(i, false);\n    else listsPointer.set(i, 1);\n  }\n\n  let range = complexRange[len - 1][0] - complexRange[0][0];\n  let bestRange = [complexRange[0][0], complexRange[len - 1][0]];\n\n  if (range === 0) return bestRange;\n\n  let shouldContinue = true;\n\n  while (shouldContinue) {\n    let num = complexRange[0][0];\n    let list = complexRange[0][1];\n    complexRange.shift();\n\n    let pointer = listsPointer.get(list);\n    if (pointer === false || pointer >= nums[list].length) {\n      shouldContinue = false;\n      break;\n    }\n\n    insertIntoSortedArray([nums[list][pointer], list]);\n    listsPointer.set(list, pointer + 1);\n\n    let currentRange = complexRange[len - 1][0] - complexRange[0][0];\n    if (currentRange < range) {\n      range = currentRange;\n      bestRange = [complexRange[0][0], complexRange[len - 1][0]];\n    }\n  }\n\n  return bestRange;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/",
+    "here_url": "smallest-range-covering-elements-from-k-lists",
+    "language": "JavaScript",
+    "difficulty": "hard",
+    "notes": ""
+  },
+  {
+    "id": "separate-black-and-white-balls",
+    "title": "Separate Black and White Balls",
+    "description": "<p>There are n balls on a table, each ball has a color black or white. You are given a 0-indexed binary string s of length n, where 1 and 0 represent black and white balls, respectively. In each step, you can choose two adjacent balls and swap them. Return the minimum number of steps to group all the black balls to the right and all the white balls to the left.</p><p><strong>Examples:</strong></p><ul><li><strong>Input:</strong> s = \"101\", <strong>Output:</strong> 1, <strong>Explanation:</strong> We can group all the black balls to the right in the following way: Swap s[0] and s[1], s = \"011\". Initially, 1s are not grouped together, requiring at least 1 step to group them to the right.</li><li><strong>Input:</strong> s = \"100\", <strong>Output:</strong> 2, <strong>Explanation:</strong> We can group all the black balls to the right in the following way: Swap s[0] and s[1], s = \"010\". Swap s[1] and s[2], s = \"001\". It can be proven that the minimum number of steps needed is 2.</li><li><strong>Input:</strong> s = \"0111\", <strong>Output:</strong> 0, <strong>Explanation:</strong> All the black balls are already grouped to the right.</li></ul>",
+    "topics": ["Two Pointers", "String", "Greedy"],
+    "attempts": [
+      {
+        "date": "Oct 15, 2024",
+        "runtime": {
+          "time": 71,
+          "beats": 74.55,
+          "complexity": "O(n)"
+        },
+        "memory": {
+          "space": 53.38,
+          "beats": 47.2,
+          "complexity": "O(1)"
+        },
+        "code": "var minimumSteps = function(s) {\n  let destination = 0;\n  let flips = 0;\n  for (let pos = 0; pos < s.length; pos++) {\n    if (s[pos] === \"0\") {\n      flips += pos - destination;\n      destination++;\n    }\n  }\n  return flips;\n};"
+      }
+    ],
+    "leetcode_url": "https://leetcode.com/problems/separate-black-and-white-balls/",
+    "here_url": "separate-black-and-white-balls",
+    "language": "JavaScript",
+    "difficulty": "medium",
+    "notes": ""
   }
 ]

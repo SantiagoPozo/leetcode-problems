@@ -41,6 +41,7 @@ function getDifficultyClass(difficulty) {
 // Función para crear un botón con contenido y clases específicas
 function createButton(content, classes = []) {
   const button = document.createElement("button");
+  content.length > 10 && classes.push("double-size");
   button.textContent = content.charAt(0).toUpperCase() + content.slice(1);
   button.classList.add(...classes);
 
